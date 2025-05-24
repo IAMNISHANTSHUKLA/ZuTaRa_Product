@@ -1,4 +1,5 @@
-import SignInForm from "@/components/auth/SignInForm";
+
+import AceternitySignInForm from "@/components/auth/AceternitySignInForm";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -8,7 +9,7 @@ export default function SignInPage() {
       <Link href="/" className="mb-8">
         <Image src="https://placehold.co/200x70/2E7DAF/white?text=ArchConnect" alt="ArchConnect Logo" width={180} height={60} data-ai-hint="logo building" />
       </Link>
-      <SignInForm />
+      <AceternitySignInForm />
     </div>
   );
 }

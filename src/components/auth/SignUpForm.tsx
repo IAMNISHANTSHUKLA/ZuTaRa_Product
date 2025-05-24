@@ -8,14 +8,14 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input"; // This will now be the Aceternity Input
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import type { UserProfile } from "@/lib/types";
 import { Eye, EyeOff } from "lucide-react";
 
@@ -26,7 +26,11 @@ const formSchema = z.object({
   role: z.enum(["client", "freelancer"], { required_error: "Please select a role." }),
 });
 
-export default function SignUpForm() {
+
+// This component is no longer directly used by the sign-up page, 
+// but kept in case it's referenced elsewhere or for future use.
+// The sign-up page now uses AceternitySignUpForm.
+function OldSignUpFormContent() {
   const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -185,4 +189,14 @@ export default function SignUpForm() {
       </CardContent>
     </Card>
   );
+}
+
+export default function SignUpForm() {
+    // This wrapper is kept for compatibility if old form is ever re-enabled,
+    // but the page itself now uses AceternitySignUpForm.
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <OldSignUpFormContent />
+        </Suspense>
+    )
 }

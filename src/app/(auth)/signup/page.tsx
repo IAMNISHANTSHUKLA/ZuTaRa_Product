@@ -1,12 +1,7 @@
-import SignUpForm from "@/components/auth/SignUpForm";
+
+import AceternitySignUpForm from "@/components/auth/AceternitySignUpForm";
 import Link from "next/link";
 import Image from "next/image";
-import { Suspense } from "react";
-
-// Wrapper component to allow SignUpForm to use useSearchParams
-function SignUpPageContent() {
-  return <SignUpForm />;
-}
 
 export default function SignUpPage() {
   return (
@@ -14,9 +9,7 @@ export default function SignUpPage() {
        <Link href="/" className="mb-8">
          <Image src="https://placehold.co/200x70/2E7DAF/white?text=ArchConnect" alt="ArchConnect Logo" width={180} height={60} data-ai-hint="logo building" />
        </Link>
-      <Suspense fallback={<div>Loading...</div>}>
-        <SignUpPageContent />
-      </Suspense>
+       <AceternitySignUpForm />
     </div>
   );
 }
