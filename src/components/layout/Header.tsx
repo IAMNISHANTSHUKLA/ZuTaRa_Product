@@ -64,7 +64,7 @@ export default function Header() {
     } else if (user) { // If user exists but no specific role dashboard
       router.push('/'); // Default to home or a generic dashboard
     } else {
-      router.push('/auth/signin');
+      router.push('/signin');
     }
     setActiveDropdown(null); // Close dropdown after navigation
   };
@@ -225,11 +225,11 @@ export default function Header() {
         ) : (
           <>
             {/* Updated Log In to be a simple link to match design */}
-            <Link href="/auth/signin" className="hover:text-primary transition-colors">
+            <Link href="/signin" className="hover:text-primary transition-colors">
               Log In
             </Link>
             {/* Sign Up remains a button for better UX, though not in the image */}
-            <Link href="/auth/signup">
+            <Link href="/signup">
               <Button variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 ml-2">
                  Sign Up <UserPlus className="ml-2 h-4 w-4" />
               </Button>
