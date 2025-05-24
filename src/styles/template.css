@@ -1,0 +1,459 @@
+
+/* Adapted from user's style.css */
+
+/* Header styles */
+.template-header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 97%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background: hsla(0, 0%, 0%, 0.118); /* #0000001e */
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  z-index: 50; /* Ensure it's on top */
+  border: 4px solid #9ae3f4; /* This color might need to be themed or removed if it clashes */
+}
+
+html.dark .template-header {
+  background: rgba(40, 40, 40, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.template-logo img {
+  height: 30px;
+  /* padding: 10px 0px 0px 0px; From original, adjust if needed */
+  cursor: pointer;
+}
+
+.template-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+.template-nav > div, .template-nav a {
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: hsl(var(--foreground)); /* Use themed color */
+  cursor: pointer;
+  transition: border 0.3s ease;
+}
+
+html.dark .template-nav > div, html.dark .template-nav a {
+  color: hsl(var(--foreground)); /* Use themed color */
+}
+
+
+.template-nav > div:hover, .template-nav a:hover {
+  border: 1px solid hsla(var(--foreground), 0.3);
+}
+
+.template-dropdown {
+  position: absolute;
+  top: 50px; /* Adjust as needed */
+  left: 0;
+  background: hsla(0, 0%, 0%, 0.1);
+  border-radius: 10px;
+  display: none; /* Controlled by JS/React state */
+  flex-direction: column;
+  border: 1px solid hsla(0, 0%, 100%, 0.2);
+  min-width: 140px;
+  z-index: 1000; /* Ensure dropdown is on top */
+}
+
+html.dark .template-dropdown {
+  background: rgba(50, 50, 50, 0.5);
+}
+
+.template-dropdown-item { /* Replaced .dropdown div */
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  color: hsl(var(--foreground)); /* Themed text */
+}
+html.dark .template-dropdown-item {
+  color: hsl(var(--foreground)); /* Themed text */
+}
+
+
+.template-dropdown-item:hover {
+  background: hsla(0, 0%, 100%, 0.2);
+}
+html.dark .template-dropdown-item:hover {
+   background: rgba(80, 80, 80, 0.5);
+}
+
+.template-has-dropdown:hover .template-dropdown {
+  /* display: flex; */ /* This will be controlled by React state */
+}
+
+/* Section styles for scroll effect */
+.template-section {
+  position: relative;
+  min-height: 100vh; /* Use min-height for flexibility */
+  overflow: hidden; /* Keep this if bg zoom relies on it */
+  display: flex; /* Added for centering content */
+  flex-direction: column; /* Added for centering content */
+  align-items: center; /* Added for centering content */
+  justify-content: center; /* Added for centering content */
+}
+
+
+.template-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0; /* Behind content */
+  will-change: transform, opacity;
+}
+
+.template-content {
+  position: relative;
+  z-index: 1; /* Above background */
+  /* height: 100%; Removed, let content define height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* font-size: 3em; Removed, too large for general content */
+  color: hsl(var(--foreground)); /* Use themed color */
+  width: 100%;
+  padding: 2rem; /* Add some padding */
+  transition: opacity 0.5s ease-out; /* Smooth fade for content */
+}
+
+.template-content-image { /* for ZUTARA text image */
+  max-width: 35%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 768px) {
+  .template-content-image {
+    max-width: 60%;
+  }
+}
+
+
+/* Benefits Flashcards */
+.template-flashcards-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center; /* Center cards when wrapped */
+  gap: 2rem; /* Was 90px, adjusted */
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 0 1rem; /* Adjusted padding */
+}
+
+.template-flashcard {
+  flex: 1 1 300px; /* Allow cards to grow and shrink, with a base size */
+  background-color: hsl(var(--card));
+  border-radius: 12px;
+  box-shadow: 0 2px 8px hsla(var(--card-foreground), 0.1);
+  padding: 2rem;
+  text-decoration: none;
+  color: hsl(var(--card-foreground));
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin: 1rem; /* Was 2rem 1rem */
+}
+
+.template-flashcard:hover {
+  box-shadow: 0 6px 16px hsla(var(--card-foreground), 0.2);
+  transform: translateY(-5px);
+}
+
+.template-flashcard h3 {
+  color: hsl(var(--card-foreground));
+  margin-bottom: 0.5rem; /* Added margin */
+}
+
+.template-flashcard p {
+  color: hsl(var(--muted-foreground));
+  margin-top: 10px;
+}
+
+
+/* Search Bar */
+.template-search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.template-search-bar {
+    width: 100%;
+    max-width: 800px; /* Reduced from 1200px for better focus */
+    padding: 12px 20px; /* Slightly increased padding */
+    border: 1px solid hsl(var(--border));
+    border-radius: 25px; /* More rounded */
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-size: 1rem; /* Was 18px */
+    box-shadow: 0 2px 8px hsla(var(--foreground), 0.1);
+    outline: none;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.template-search-bar::placeholder {
+    color: hsl(var(--muted-foreground));
+    font-size: 1rem; /* Was 16px */
+}
+
+.template-search-bar:focus {
+    box-shadow: 0 4px 12px hsla(var(--ring), 0.2);
+    border-color: hsl(var(--ring));
+}
+
+
+/* Ideas Flashcards */
+.template-ideas-flashcards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; /* Was 10px */
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.template-idea-flashcard {
+  flex: 1 1 150px; /* Responsive flex properties */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: hsl(var(--card));
+  border-radius: 12px;
+  box-shadow: 0 2px 8px hsla(var(--card-foreground), 0.1);
+  padding: 1.5rem; /* Was 2rem */
+  min-height: 80px; /* Was max-height 120px, height 100px */
+  text-decoration: none;
+  color: hsl(var(--card-foreground));
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin: 0.5rem; /* Was 2rem 1rem */
+  font-size: 0.9rem;
+}
+
+.template-idea-flashcard:hover {
+  box-shadow: 0 6px 16px hsla(var(--card-foreground), 0.2);
+  transform: translateY(-3px);
+}
+
+
+/* Section Title (shared) */
+.template-section-title {
+  font-size: 2.25rem; /* Was 35px */
+  text-align: center;
+  color: hsl(var(--foreground));
+  margin-bottom: 2rem; /* Increased margin */
+  font-weight: 600; /* Added font weight */
+}
+
+
+/* Reviews Section */
+.template-reviews-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem 1rem; /* Adjusted padding */
+  margin: auto;
+  text-align: center;
+}
+
+.template-reviews-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
+  justify-content: center; /* Center items when wrapped */
+  gap: 2rem; /* Was 100px, adjusted */
+  margin-top: 2rem; /* Was 4rem */
+}
+
+.template-review-card {
+  flex: 1 1 300px; /* Responsive flex properties */
+  max-width: 350px; /* Was 400px */
+  margin: auto;
+  padding: 1.5rem;
+  background-color: hsl(var(--card));
+  border-radius: 12px;
+  box-shadow: 0 4px 12px hsla(var(--card-foreground), 0.1);
+}
+
+.template-review-card img {
+  width: 120px; /* Was 230px */
+  height: 120px; /* Was 230px */
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px hsla(var(--card-foreground), 0.1); /* Adjusted shadow */
+  margin-bottom: 1.5rem; /* Was 2rem */
+  border: 3px solid hsl(var(--background)); /* Added border to pop */
+}
+
+.template-review-card h3 {
+  margin: 0.5rem 0;
+  color: hsl(var(--foreground));
+  font-size: 1.5rem; /* Was 30px */
+}
+
+.template-review-card h6 { /* Role */
+  margin: 0.25rem 0 1rem 0; /* Adjusted margin */
+  color: hsl(var(--accent)); /* Use accent color for role */
+  font-size: 1rem; /* Was 22px */
+  font-weight: 500;
+}
+
+.template-review-card p { /* Quote */
+  font-style: italic;
+  text-align: center;
+  color: hsl(var(--muted-foreground));
+  font-size: 1rem; /* Was 20px */
+  line-height: 1.6;
+}
+
+
+/* Quotes Layout in Hero */
+.template-quotes-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem; /* Was 2rem */
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px; /* Added max-width */
+  margin: 0 auto; /* Center layout */
+}
+
+.template-quote-block {
+  flex: 1 1 250px; /* Responsive flex properties */
+  min-width: 200px;
+  color: hsl(var(--foreground));
+  font-size: 0.95rem; /* Was 17px */
+  padding: 1rem;
+  text-align: center;
+}
+
+.template-quote-block h4 {
+  margin-bottom: 0.75rem; /* Was 0.5rem */
+  font-weight: 600; /* Was bold */
+  font-size: 1.1rem; /* Slightly larger */
+  color: hsl(var(--primary)); /* Use primary color for quote source */
+}
+
+.template-quote-block p {
+  text-align: center;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+
+/* Footer Section */
+.template-content4.footer-container { /* Added .footer-container for clarity */
+  background-color: hsl(var(--secondary)); /* Use secondary for footer bg */
+  color: hsl(var(--secondary-foreground));
+  padding: 4rem 2rem;
+}
+
+html.dark .template-content4.footer-container {
+  background-color: hsl(var(--background)); /* Darker for dark mode footer */
+}
+
+.template-footer-section {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.template-footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem; /* Was 1rem */
+}
+
+.template-footer-column {
+  flex: 1 1 200px; /* Adjusted flex basis */
+  min-width: 180px; /* Added min-width */
+}
+
+.template-footer-column h4 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem; /* Was 18px */
+  font-weight: 600;
+  color: hsl(var(--primary));
+}
+
+.template-footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.template-footer-column ul li {
+  margin-bottom: 0.6rem; /* Was 0.5rem */
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.template-footer-column ul li:hover {
+  color: hsl(var(--primary)); /* Was #0099cc */
+}
+
+html.dark .template-footer-column ul li:hover {
+  color: hsl(var(--primary-foreground)); /* Was #66e0ff */
+}
+
+.template-footer-divider {
+  margin: 3rem 0 2rem;
+  border: none;
+  border-top: 1px solid hsl(var(--border));
+}
+
+.template-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem; /* Added gap for wrapping */
+}
+
+.template-footer-logo img {
+  height: 35px; /* Was 40px */
+}
+
+.template-footer-socials {
+  display: flex;
+  gap: 1rem; /* Spacing between social icons */
+}
+
+.template-footer-socials a img {
+  height: 24px; /* Was 28px */
+  /* margin-left: 15px; Removed, using gap on parent */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.8;
+}
+
+.template-footer-socials a img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Ensure main content area has some padding, especially on mobile */
+main {
+  padding-top: 80px; /* Adjust if header height changes */
+}
+
+/* Specific style for hero section's background image */
+.hero-bg-image {
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* If parallax desired, otherwise 'scroll' */
+}
+
