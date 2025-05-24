@@ -3,6 +3,13 @@
 
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Clock, DollarSign, Star, Bookmark, ChevronDown, Users, Calendar, TrendingUp, Home, Palette, Compass } from 'lucide-react';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Zutara',
+  description: 'Find your next architecture and design project on Zutara.',
+};
 
 const JobListingsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,7 +33,7 @@ const JobListingsPage = () => {
 
   const jobs = [
     {
-      id: 1,
+      id: "1",
       title: 'Modern Residential Home Design',
       description: 'Seeking an experienced residential architect to design a contemporary 3,500 sq ft family home with sustainable features and open-concept living spaces.',
       client: 'GreenLiving Developers',
@@ -43,7 +50,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: 2,
+      id: "2",
       title: 'Luxury Hotel Interior Design',
       description: 'Looking for a creative interior designer to conceptualize and design interiors for a 120-room boutique hotel with spa and restaurant facilities.',
       client: 'Prestige Hospitality Group',
@@ -60,7 +67,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: 3,
+      id: "3",
       title: '3D Architectural Visualization & Renderings',
       description: 'Need high-quality photorealistic renderings for a mixed-use development project including exterior and interior visualizations.',
       client: 'Urban Development Co',
@@ -77,7 +84,7 @@ const JobListingsPage = () => {
       featured: false
     },
     {
-      id: 4,
+      id: "4",
       title: 'Corporate Office Space Planning',
       description: 'Design an efficient and modern workspace for 150 employees including open areas, private offices, meeting rooms, and collaborative spaces.',
       client: 'TechFlow Solutions',
@@ -94,7 +101,7 @@ const JobListingsPage = () => {
       featured: false
     },
     {
-      id: 5,
+      id: "5",
       title: 'Historic Building Renovation Design',
       description: 'Seeking an architect experienced in historic preservation to renovate a 1920s warehouse into modern loft apartments while maintaining historic character.',
       client: 'Heritage Properties LLC',
@@ -111,7 +118,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: 6,
+      id: "6",
       title: 'Landscape Design for Residential Community',
       description: 'Design sustainable landscaping and outdoor spaces for a 50-unit residential development including parks, walkways, and water features.',
       client: 'EcoVillage Developments',
@@ -147,17 +154,19 @@ const JobListingsPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
+              <Link href="/" className="flex items-center space-x-2">
                 <Compass className="w-8 h-8 text-blue-600" />
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Zutara</h1>
-              </div>
-              <span className="text-gray-500">|</span>
-              <span className="text-gray-600">Architecture & Design Marketplace</span>
+              </Link>
+              <span className="text-gray-500 hidden md:inline">|</span>
+              <span className="text-gray-600 hidden md:inline">Architecture & Design Marketplace</span>
             </div>
             <div className="flex items-center space-x-4">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                Post a Project
-              </button>
+              <Link href="/client/post-job">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                  Post a Project
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -275,8 +284,8 @@ const JobListingsPage = () => {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 mb-2">Project Type</label>
-                  <select id="projectType" className="w-full border border-gray-300 rounded-lg px-3 py-2">
+                  <label htmlFor="projectTypeFilter" className="block text-sm font-medium text-gray-700 mb-2">Project Type</label>
+                  <select id="projectTypeFilter" className="w-full border border-gray-300 rounded-lg px-3 py-2">
                     <option>All Types</option>
                     <option>New Construction</option>
                     <option>Renovation</option>
@@ -337,9 +346,11 @@ const JobListingsPage = () => {
                         {job.projectType}
                       </span>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 cursor-pointer transition-colors">
-                      {job.title}
-                    </h3>
+                     <Link href={`/jobs/${job.id}`} legacyBehavior>
+                      <a className="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 cursor-pointer transition-colors block">
+                        {job.title}
+                      </a>
+                    </Link>
                     <p className="text-gray-600 mb-4 leading-relaxed text-base">{job.description}</p>
                   </div>
                   <button aria-label="Bookmark job" className="ml-4 p-2 text-gray-400 hover:text-blue-600 transition-colors">
@@ -414,9 +425,11 @@ const JobListingsPage = () => {
                     </div>
                   </div>
                   <div className="flex items-center space-x-3 w-full sm:w-auto">
-                    <button className="flex-1 sm:flex-none px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-                      View Details
-                    </button>
+                     <Link href={`/jobs/${job.id}`} legacyBehavior>
+                        <a className="flex-1 sm:flex-none px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                           View Details
+                        </a>
+                    </Link>
                     <button className="flex-1 sm:flex-none px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium shadow-sm">
                       Submit Proposal
                     </button>
@@ -448,3 +461,6 @@ const JobListingsPage = () => {
 };
 
 export default JobListingsPage;
+
+
+    
