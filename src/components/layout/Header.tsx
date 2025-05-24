@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -5,7 +6,7 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, LogIn, UserPlus } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'; // Keep for DropdownMenuTrigger if needed
 import { useAuth } from '@/hooks/useAuth';
 import {
   DropdownMenu,
@@ -24,21 +25,22 @@ interface NavItem {
   children?: NavItem[];
 }
 
+// Updated navItems to match the ZUTARA design
 const navItems: NavItem[] = [
   { label: 'About', href: '/about' },
   { label: 'Projects', href: '/projects' },
   {
     label: 'Language',
     children: [
-      { label: 'English' },
-      { label: 'Hindi' },
+      { label: 'English', href: '#' }, // Added href for consistency
+      { label: 'Hindi', href: '#' },   // Added href for consistency
     ],
   },
   {
     label: 'Solutions',
     children: [
-      { label: 'AI Tools', href: '#' }, // Placeholder links
-      { label: 'Dashboard', href: '/dashboard' }, // Conditional link
+      { label: 'AI Tools', href: '#' },
+      { label: 'Dashboard', href: '#' }, // Placeholder, will be conditional
       { label: 'Build A Firm', href: '#' },
     ],
   },
@@ -59,10 +61,12 @@ export default function Header() {
       router.push('/client/dashboard');
     } else if (userProfile?.role === 'freelancer') {
       router.push('/freelancer/dashboard');
+    } else if (user) { // If user exists but no specific role dashboard
+      router.push('/'); // Default to home or a generic dashboard
     } else {
-      // Fallback or prompt for role if not set
-      router.push('/auth/signin'); // Or a role selection page
+      router.push('/auth/signin');
     }
+    setActiveDropdown(null); // Close dropdown after navigation
   };
   
   useEffect(() => {
@@ -75,56 +79,114 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [activeDropdown]);
 
+  // Filter out Dashboard from Solutions if user is not logged in, or create specific dashboard link
+  const getSolutionsItems = () => {
+    let solutions = navItems.find(item => item.label === 'Solutions')?.children || [];
+    if (user) {
+      solutions = solutions.map(item => 
+        item.label === 'Dashboard' 
+        ? { 
+            label: 'Dashboard', 
+            href: userProfile?.role === 'client' ? '/client/dashboard' : (userProfile?.role === 'freelancer' ? '/freelancer/dashboard' : '/') 
+          } 
+        : item
+      );
+    } else {
+      solutions = solutions.filter(item => item.label !== 'Dashboard');
+    }
+    return solutions;
+  };
+
 
   return (
-    <header className="template-header shadow-md">
-      <div className="flex items-center">
+    <header className="template-header">
+      <div className="template-logo-container">
         <Link href="/" className="template-logo">
-          <Image src="https://placehold.co/150x50/2E7DAF/white?text=ArchConnect" alt="ArchConnect Logo" width={120} height={30} data-ai-hint="logo building" />
+          {/* Updated logo to ZUTARA */}
+          <Image 
+            src="https://placehold.co/130x30/333333/FFFFFF?text=Z+ZUTARA&font=arial" 
+            alt="ZUTARA Logo" 
+            width={130} 
+            height={30} 
+            data-ai-hint="Z icon brand name" 
+          />
         </Link>
+        <ThemeToggle />
       </div>
       <nav className="template-nav">
-        {navItems.map((item, index) => (
-          <div 
-            key={item.label} 
-            className={`relative ${item.children ? 'template-has-dropdown' : ''}`}
-            ref={el => dropdownRefs.current[index] = el}
-          >
-            {item.href ? (
-               item.label === 'Dashboard' && !user ? null : (
-                <Link href={item.label === 'Dashboard' ? (userProfile?.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard') : item.href} className="hover:text-primary transition-colors">
+        {navItems.map((item, index) => {
+          if (item.label === 'Solutions') { // Special handling for Solutions dropdown
+            const solutionLinks = getSolutionsItems();
+            if (solutionLinks.length === 0 && !user) return null; // Don't render Solutions if no items for logged out user
+
+            return (
+              <div 
+                key={item.label} 
+                className={`relative ${item.children ? 'template-has-dropdown' : ''}`}
+                ref={el => dropdownRefs.current[index] = el}
+              >
+                <button
+                  onClick={() => handleDropdownToggle(item.label)}
+                  className="flex items-center hover:text-primary transition-colors"
+                >
+                  {item.label}
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+                {activeDropdown === item.label && (
+                  <div className="template-dropdown">
+                    {solutionLinks.map((child) => (
+                      <Link
+                        key={child.label}
+                        href={child.href || '#'}
+                        onClick={child.label === 'Dashboard' ? handleDashboardNavigation : () => setActiveDropdown(null)}
+                        className="block px-4 py-2 text-sm template-dropdown-item hover:bg-accent hover:text-accent-foreground"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
+          // Default rendering for other nav items
+          return (
+            <div 
+              key={item.label} 
+              className={`relative ${item.children ? 'template-has-dropdown' : ''}`}
+              ref={el => dropdownRefs.current[index] = el}
+            >
+              {item.href ? (
+                <Link href={item.href} className="hover:text-primary transition-colors" onClick={() => setActiveDropdown(null)}>
                   {item.label}
                 </Link>
-              )
-            ) : (
-              <button
-                onClick={() => item.children && handleDropdownToggle(item.label)}
-                className="flex items-center hover:text-primary transition-colors"
-              >
-                {item.label}
-                {item.children && <ChevronDown className="ml-1 h-4 w-4" />}
-              </button>
-            )}
-            {item.children && activeDropdown === item.label && (
-              <div className="template-dropdown absolute mt-2 py-2 w-48 bg-background shadow-xl rounded-md border border-border">
-                {item.children.map((child) => (
-                  <Link
-                    key={child.label}
-                    href={
-                      child.label === 'Dashboard' && user 
-                        ? (userProfile?.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard') 
-                        : (child.href || '#')
-                    }
-                    onClick={() => setActiveDropdown(null)}
-                    className="block px-4 py-2 text-sm template-dropdown-item hover:bg-accent hover:text-accent-foreground"
-                  >
-                    {child.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+              ) : (
+                <button
+                  onClick={() => item.children && handleDropdownToggle(item.label)}
+                  className="flex items-center hover:text-primary transition-colors"
+                >
+                  {item.label}
+                  {item.children && <ChevronDown className="ml-1 h-4 w-4" />}
+                </button>
+              )}
+              {item.children && activeDropdown === item.label && (
+                <div className="template-dropdown">
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.label}
+                      href={child.href || '#'}
+                      onClick={() => setActiveDropdown(null)}
+                      className="block px-4 py-2 text-sm template-dropdown-item hover:bg-accent hover:text-accent-foreground"
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
 
         {user ? (
            <DropdownMenu>
@@ -162,19 +224,19 @@ export default function Header() {
           </DropdownMenu>
         ) : (
           <>
-            <Link href="/auth/signin">
-              <Button variant="ghost" className="hover:text-primary">
-                <LogIn className="mr-2 h-4 w-4" /> Log In
-              </Button>
+            {/* Updated Log In to be a simple link to match design */}
+            <Link href="/auth/signin" className="hover:text-primary transition-colors">
+              Log In
             </Link>
+            {/* Sign Up remains a button for better UX, though not in the image */}
             <Link href="/auth/signup">
-              <Button variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 ml-2">
                  Sign Up <UserPlus className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </>
         )}
-         <ThemeToggle />
+         {/* ThemeToggle is now next to the logo */}
       </nav>
     </header>
   );
