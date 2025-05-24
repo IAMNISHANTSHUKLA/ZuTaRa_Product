@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -72,6 +73,10 @@ export default function SignUpForm() {
       toast({ title: "Success", description: "Account created successfully. Please sign in." });
       router.push("/auth/signin");
     } catch (error: any) {
+      console.error("Sign Up Error:", error);
+      if (error.code) {
+        console.error("Firebase Error Code:", error.code);
+      }
       toast({
         title: "Sign Up Error",
         description: error.message || "Failed to create account. Please try again.",
