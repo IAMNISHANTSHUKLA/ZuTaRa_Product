@@ -142,7 +142,7 @@ export default function AceternitySignInForm() {
   return (
     <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-        Welcome Back to ArchConnect
+        Welcome Back to Zutara
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
         Sign in to access your account.
@@ -185,7 +185,7 @@ export default function AceternitySignInForm() {
         </div>
         <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-300">
           Don&apos;t have an account?{" "}
-          <Link href="/auth/signup" className="font-medium text-primary hover:underline">
+          <Link href="/signup" className="font-medium text-primary hover:underline">
             Sign up
           </Link>
         </p>

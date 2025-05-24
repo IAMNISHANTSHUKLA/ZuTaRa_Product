@@ -13,7 +13,7 @@ const footerColumns = [
   },
   {
     title: "For Clients",
-    links: ["ArchConnect Pro", "Project Management", "ClearVoice", "Content Marketing", "Creative Talent", "AutoDS", "Dropshipping Tool", "Logo Maker", "Contact Sales", "ArchConnect Go"]
+    links: ["Zutara Pro", "Project Management", "ClearVoice", "Content Marketing", "Creative Talent", "AutoDS", "Dropshipping Tool", "Logo Maker", "Contact Sales", "Zutara Go"]
   },
   {
     title: "For Students",
@@ -21,7 +21,7 @@ const footerColumns = [
   },
   {
     title: "Company",
-    links: ["About ArchConnect", "Help & Support", "Social Impact", "Careers", "Terms of Service", "Privacy Policy", "Do not sell or share my personal information", "Partnerships", "Creator Network", "Affiliates", "Invite a Friend", "Press & News", "Investor Relations"]
+    links: ["About Zutara", "Help & Support", "Social Impact", "Careers", "Terms of Service", "Privacy Policy", "Do not sell or share my personal information", "Partnerships", "Creator Network", "Affiliates", "Invite a Friend", "Press & News", "Investor Relations"]
   }
 ];
 
@@ -37,7 +37,7 @@ export default function Footer() {
                 {column.links.map((link) => (
                   <li key={link}>
                     <Link href="#" className="hover:text-primary transition-colors">
-                      {link}
+                      {link.replace("ArchConnect", "Zutara")}
                     </Link>
                   </li>
                 ))}
@@ -48,7 +48,7 @@ export default function Footer() {
         <hr className="template-footer-divider my-12" />
         <div className="template-footer-bottom flex flex-col md:flex-row justify-between items-center">
           <div className="template-footer-logo mb-6 md:mb-0">
-            <Image src="https://placehold.co/180x60/2E7DAF/white?text=ArchConnect" alt="ArchConnect Logo" width={150} height={40} data-ai-hint="logo building" />
+            <Image src="https://placehold.co/180x60/2E7DAF/white?text=Zutara" alt="Zutara Logo" width={150} height={40} data-ai-hint="logo building" />
           </div>
           <div className="template-footer-socials flex space-x-4">
             <Link href="#" aria-label="Facebook"><Facebook className="w-6 h-6 hover:text-primary transition-colors" /></Link>
@@ -58,7 +58,7 @@ export default function Footer() {
           </div>
         </div>
         <p className="text-center text-muted-foreground text-sm mt-8">
-          © {new Date().getFullYear()} ArchConnect. All rights reserved.
+          © {new Date().getFullYear()} Zutara. All rights reserved.
         </p>
       </div>
     </footer>

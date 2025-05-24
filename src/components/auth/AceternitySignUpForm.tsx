@@ -91,7 +91,7 @@ function AceternitySignUpFormContent() {
       await setDoc(doc(db, "users", user.uid), userProfileData);
 
       toast({ title: "Success", description: "Account created successfully! Please sign in." });
-      router.push("/auth/signin");
+      router.push("/signin");
     } catch (error: any) {
       console.error("Sign Up Error:", error);
       if (error.code) {
@@ -157,7 +157,7 @@ function AceternitySignUpFormContent() {
   return (
     <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-        Join ArchConnect
+        Join Zutara
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
         Create your account to connect with architects and clients.
@@ -227,7 +227,7 @@ function AceternitySignUpFormContent() {
         </div>
          <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-300">
           Already have an account?{" "}
-          <Link href="/auth/signin" className="font-medium text-primary hover:underline">
+          <Link href="/signin" className="font-medium text-primary hover:underline">
             Sign in
           </Link>
         </p>

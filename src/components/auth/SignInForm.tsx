@@ -58,7 +58,7 @@ export default function SignInForm() {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">Welcome Back to ArchConnect</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">Welcome Back to Zutara</CardTitle>
         <CardDescription className="text-center">Sign in to access your account.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -112,7 +112,7 @@ export default function SignInForm() {
         </Form>
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Don't have an account?{" "}
-          <Link href="/auth/signup" className="font-medium text-primary hover:underline">
+          <Link href="/signup" className="font-medium text-primary hover:underline">
             Sign up
           </Link>
         </p>

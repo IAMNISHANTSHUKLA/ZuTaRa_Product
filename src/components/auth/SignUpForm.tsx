@@ -75,7 +75,7 @@ function OldSignUpFormContent() {
       await setDoc(doc(db, "users", user.uid), userProfileData);
 
       toast({ title: "Success", description: "Account created successfully. Please sign in." });
-      router.push("/auth/signin");
+      router.push("/signin");
     } catch (error: any) {
       console.error("Sign Up Error:", error);
       if (error.code) {
@@ -94,7 +94,7 @@ function OldSignUpFormContent() {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">Create your ArchConnect Account</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">Create your Zutara Account</CardTitle>
         <CardDescription className="text-center">Join our community of architects and clients.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -182,7 +182,7 @@ function OldSignUpFormContent() {
         </Form>
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/auth/signin" className="font-medium text-primary hover:underline">
+          <Link href="/signin" className="font-medium text-primary hover:underline">
             Sign in
           </Link>
         </p>

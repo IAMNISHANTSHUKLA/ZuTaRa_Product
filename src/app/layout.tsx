@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'ArchConnect - Architectural Freelancing Platform',
+  title: 'Zutara - Architectural Freelancing Platform',
   description: 'Connecting architects, clients, and students for creative collaboration.',
 };
 
