@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -19,7 +20,7 @@ const benefits = [
   {
     title: "Internships",
     description: "Kickstart your career with hands-on experience. Our platform connects students with top firms offering meaningful internships, helping you learn, grow, and make your mark.",
-    href: "/jobs?category=internship" // Updated to use category query param
+    href: "/jobs?q=internship" // Updated to use search query for "internship"
   }
 ];
 
@@ -39,10 +40,20 @@ export default function BenefitsSection() {
 
         <div className="template-search-container mt-16">
           <div className="relative w-full max-w-xl">
+            {/* The search input here is for visual demonstration; actual search happens on /jobs page */}
             <Input 
               type="text" 
               className="template-search-bar h-12 pl-12 pr-4 text-base" 
               placeholder="Search for Services (e.g., Residential Design, 3D Modeling)" 
+              readOnly 
+              onClick={() => {
+                // Consider navigating to /jobs or opening a search modal
+                // For now, it's a visual placeholder.
+                // A simple navigation could be:
+                // import { useRouter } from 'next/navigation';
+                // const router = useRouter();
+                // router.push('/jobs');
+              }}
             />
             <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           </div>
@@ -51,3 +62,4 @@ export default function BenefitsSection() {
     </section>
   );
 }
+

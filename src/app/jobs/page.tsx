@@ -1,39 +1,56 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, MapPin, Clock, DollarSign, Star, Bookmark, ChevronDown, Users, Calendar, TrendingUp, Home, Palette, Compass } from 'lucide-react';
-import type { Metadata } from 'next';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import type { Metadata } from 'next'; // Keep if you want to set metadata this way for client components, though usually done in page.tsx for server components
 
-export const metadata: Metadata = {
-  title: 'Zutara',
-  description: 'Find your next architecture and design project on Zutara.',
-};
+// While metadata is usually for Server Components, Next.js might allow it here.
+// If not, this can be removed or handled via `document.title` in useEffect.
+// For simplicity of this update, we'll keep it, assuming it's handled or ignored gracefully.
+// export const metadata: Metadata = {
+// title: 'Zutara',
+// description: 'Find your next architecture and design project on Zutara.',
+// };
+
 
 const JobListingsPage = () => {
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  // const [selectedBudget, setSelectedBudget] = useState('all'); // Commented out as not used in filtering
-  // const [selectedDuration, setSelectedDuration] = useState('all'); // Commented out as not used in filtering
+  // const [selectedBudget, setSelectedBudget] = useState('all'); // Keep commented if not used
+  // const [selectedDuration, setSelectedDuration] = useState('all'); // Keep commented if not used
   const [showFilters, setShowFilters] = useState(false);
 
-  // const categories = [ // Commented out as not used in current select, but kept for potential future use
-  //   'All Categories',
-  //   'Residential Architecture',
-  //   'Commercial Architecture',
-  //   'Interior Design',
-  //   'Landscape Architecture',
-  //   'Urban Planning',
-  //   'Structural Engineering',
-  //   '3D Visualization',
-  //   'CAD Drafting',
-  //   'Renovation Design'
+  useEffect(() => {
+    const queryParam = searchParams.get('q');
+    const categoryParam = searchParams.get('category');
+    if (queryParam) {
+      setSearchQuery(queryParam);
+    }
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [searchParams]);
+
+  // const categories = [ // Keep commented if not directly used in a dynamic select
+  // 'All Categories',
+  // 'Residential Architecture',
+  // 'Commercial Architecture',
+  // 'Interior Design',
+  // 'Landscape Architecture',
+  // 'Urban Planning',
+  // 'Structural Engineering',
+  // '3D Visualization',
+  // 'CAD Drafting',
+  // 'Renovation Design'
   // ];
 
   const jobs = [
     {
-      id: "1",
+      id: 1,
       title: 'Modern Residential Home Design',
       description: 'Seeking an experienced residential architect to design a contemporary 3,500 sq ft family home with sustainable features and open-concept living spaces.',
       client: 'GreenLiving Developers',
@@ -50,7 +67,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: "2",
+      id: 2,
       title: 'Luxury Hotel Interior Design',
       description: 'Looking for a creative interior designer to conceptualize and design interiors for a 120-room boutique hotel with spa and restaurant facilities.',
       client: 'Prestige Hospitality Group',
@@ -67,15 +84,15 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: "3",
-      title: '3D Architectural Visualization & Renderings',
-      description: 'Need high-quality photorealistic renderings for a mixed-use development project including exterior and interior visualizations.',
+      id: 3,
+      title: '3D Architectural Visualization & Renderings (Internship Opportunity)',
+      description: 'Need high-quality photorealistic renderings for a mixed-use development project including exterior and interior visualizations. Great for interns.',
       client: 'Urban Development Co',
       clientRating: 4.7,
       budget: '$3,500 - $6,000',
       duration: '4-6 weeks',
       category: '3D Visualization',
-      skills: ['3ds Max', 'V-Ray', 'Corona Renderer', 'Photoshop', 'Architectural Visualization'],
+      skills: ['3ds Max', 'V-Ray', 'Corona Renderer', 'Photoshop', 'Architectural Visualization', 'Internship'],
       posted: '1 day ago',
       proposals: 18,
       location: 'Remote',
@@ -84,7 +101,7 @@ const JobListingsPage = () => {
       featured: false
     },
     {
-      id: "4",
+      id: 4,
       title: 'Corporate Office Space Planning',
       description: 'Design an efficient and modern workspace for 150 employees including open areas, private offices, meeting rooms, and collaborative spaces.',
       client: 'TechFlow Solutions',
@@ -101,7 +118,7 @@ const JobListingsPage = () => {
       featured: false
     },
     {
-      id: "5",
+      id: 5,
       title: 'Historic Building Renovation Design',
       description: 'Seeking an architect experienced in historic preservation to renovate a 1920s warehouse into modern loft apartments while maintaining historic character.',
       client: 'Heritage Properties LLC',
@@ -118,7 +135,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: "6",
+      id: 6,
       title: 'Landscape Design for Residential Community',
       description: 'Design sustainable landscaping and outdoor spaces for a 50-unit residential development including parks, walkways, and water features.',
       client: 'EcoVillage Developments',
@@ -137,18 +154,23 @@ const JobListingsPage = () => {
   ];
 
   const filteredJobs = jobs.filter(job => {
-    const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         job.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         job.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()));
+    const normalizedSearchQuery = searchQuery.toLowerCase();
+    const matchesSearch = job.title.toLowerCase().includes(normalizedSearchQuery) ||
+                         job.description.toLowerCase().includes(normalizedSearchQuery) ||
+                         job.skills.some(skill => skill.toLowerCase().includes(normalizedSearchQuery));
     
     const matchesCategory = selectedCategory === 'all' || job.category === selectedCategory;
-    // Add other filter conditions for budget, duration here if states are used
     
     return matchesSearch && matchesCategory;
   });
 
+  // Effect to set document title if metadata object isn't picked up
+  useEffect(() => {
+    document.title = 'Zutara - Job Listings';
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-gray-800"> {/* Ensure text color contrast */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-gray-800">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -245,6 +267,7 @@ const JobListingsPage = () => {
                 <option value="Landscape Architecture">Landscape Architecture</option>
                 <option value="3D Visualization">3D Visualization</option>
                 <option value="Renovation Design">Renovation Design</option>
+                 {/* Add other categories from your list if needed */}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
             </div>
@@ -346,7 +369,7 @@ const JobListingsPage = () => {
                         {job.projectType}
                       </span>
                     </div>
-                     <Link href={`/jobs/${job.id}`} legacyBehavior>
+                    <Link href={`/jobs/${job.id}`} legacyBehavior>
                       <a className="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 cursor-pointer transition-colors block">
                         {job.title}
                       </a>
@@ -418,15 +441,15 @@ const JobListingsPage = () => {
                     <div>
                       <p className="font-semibold text-gray-900">{job.client}</p>
                       <div className="flex items-center space-x-1">
-                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" /> {/* Ensure star is filled */}
+                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                         <span className="text-sm font-medium text-gray-700">{job.clientRating}</span>
                         <span className="text-xs text-gray-500">• Verified Client</span>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3 w-full sm:w-auto">
-                     <Link href={`/jobs/${job.id}`} legacyBehavior>
-                        <a className="flex-1 sm:flex-none px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                    <Link href={`/jobs/${job.id}`} legacyBehavior>
+                        <a className="flex-1 sm:flex-none px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center">
                            View Details
                         </a>
                     </Link>
@@ -441,7 +464,7 @@ const JobListingsPage = () => {
         </div>
 
         {/* Load More */}
-        {jobs.length > filteredJobs.length || filteredJobs.length === jobs.length && jobs.length > 0 && ( // Simplified logic for showing load more
+        {filteredJobs.length === 0 && jobs.length > 0 && ( // Condition to show Load More only if there are more jobs to load potentially
            <div className="text-center mt-8">
              <button className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
                Load More Projects
@@ -461,6 +484,3 @@ const JobListingsPage = () => {
 };
 
 export default JobListingsPage;
-
-
-    
