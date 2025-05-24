@@ -1,3 +1,4 @@
+
 "use client";
 
 import AceternitySignUpForm from "@/components/auth/AceternitySignUpForm";

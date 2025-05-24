@@ -7,7 +7,7 @@ import * as z from "zod";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"; // This will now be the Aceternity Input
+import { Input } from "@/components/ui/input"; 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -42,12 +42,12 @@ export default function SignInForm() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
-      toast({ title: "Success", description: "Signed in successfully." });
-      router.push("/"); // Redirect to dashboard or home
+      toast({ title: "Success", description: "Signed in successfully to Zutara." });
+      router.push("/"); 
     } catch (error: any) {
       toast({
         title: "Sign In Error",
-        description: error.message || "Failed to sign in. Please check your credentials.",
+        description: error.message || "Failed to sign in to Zutara. Please check your credentials.",
         variant: "destructive",
       });
     } finally {
@@ -59,7 +59,7 @@ export default function SignInForm() {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">Welcome Back to Zutara</CardTitle>
-        <CardDescription className="text-center">Sign in to access your account.</CardDescription>
+        <CardDescription className="text-center">Sign in to access your Zutara account.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -111,7 +111,7 @@ export default function SignInForm() {
           </form>
         </Form>
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Don't have an account?{" "}
+          Don't have a Zutara account?{" "}
           <Link href="/signup" className="font-medium text-primary hover:underline">
             Sign up
           </Link>

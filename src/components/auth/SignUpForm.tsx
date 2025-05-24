@@ -8,7 +8,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"; // This will now be the Aceternity Input
+import { Input } from "@/components/ui/input"; 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
@@ -74,7 +74,7 @@ function OldSignUpFormContent() {
       };
       await setDoc(doc(db, "users", user.uid), userProfileData);
 
-      toast({ title: "Success", description: "Account created successfully. Please sign in." });
+      toast({ title: "Success", description: "Zutara account created successfully. Please sign in." });
       router.push("/signin");
     } catch (error: any) {
       console.error("Sign Up Error:", error);
@@ -83,7 +83,7 @@ function OldSignUpFormContent() {
       }
       toast({
         title: "Sign Up Error",
-        description: error.message || "Failed to create account. Please try again.",
+        description: error.message || "Failed to create Zutara account. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -95,7 +95,7 @@ function OldSignUpFormContent() {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">Create your Zutara Account</CardTitle>
-        <CardDescription className="text-center">Join our community of architects and clients.</CardDescription>
+        <CardDescription className="text-center">Join our community of architects and clients on Zutara.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -163,7 +163,7 @@ function OldSignUpFormContent() {
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select your role" />
+                        <SelectValue placeholder="Select your role on Zutara" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -181,7 +181,7 @@ function OldSignUpFormContent() {
           </form>
         </Form>
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
+          Already have a Zutara account?{" "}
           <Link href="/signin" className="font-medium text-primary hover:underline">
             Sign in
           </Link>
@@ -192,8 +192,6 @@ function OldSignUpFormContent() {
 }
 
 export default function SignUpForm() {
-    // This wrapper is kept for compatibility if old form is ever re-enabled,
-    // but the page itself now uses AceternitySignUpForm.
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <OldSignUpFormContent />

@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Zutara - Architectural Freelancing Platform',
-  description: 'Connecting architects, clients, and students for creative collaboration.',
+  description: 'Connecting architects, clients, and students for creative collaboration. Welcome to Zutara!',
 };
 
 export default function RootLayout({

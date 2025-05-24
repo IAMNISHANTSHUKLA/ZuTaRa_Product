@@ -14,8 +14,8 @@ import { auth, db } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 import type { UserProfile } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Label } from "@/components/ui/label"; // Aceternity Label
-import { Input } from "@/components/ui/input"; // Aceternity Input
+import { Label } from "@/components/ui/label"; 
+import { Input } from "@/components/ui/input"; 
 import { IconBrandGoogle } from "@tabler/icons-react";
 
 const BottomGradient = () => {
@@ -55,7 +55,6 @@ export default function AceternitySignInForm() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast({ title: "Success", description: "Signed in successfully." });
-      // Fetch user profile after sign-in to determine role and redirect
       const user = auth.currentUser;
       if (user) {
         const userDocRef = doc(db, "users", user.uid);
@@ -67,13 +66,13 @@ export default function AceternitySignInForm() {
           } else if (userProfile.role === 'freelancer') {
             router.push("/freelancer/dashboard");
           } else {
-            router.push("/"); // Fallback if role is not set or unknown
+            router.push("/"); 
           }
         } else {
-          router.push("/"); // Fallback if profile doesn't exist (shouldn't happen for email sign-in)
+          router.push("/"); 
         }
       } else {
-        router.push("/"); // Fallback
+        router.push("/"); 
       }
     } catch (error: any) {
       console.error("Sign In Error:", error);
@@ -100,30 +99,26 @@ export default function AceternitySignInForm() {
 
       if (userDoc.exists()) {
         userProfileData = userDoc.data() as UserProfile;
-        // If user exists but role is somehow missing, set it to null
         if (userProfileData.role === undefined) userProfileData.role = null;
-         await setDoc(doc(db, "users", user.uid), { photoURL: user.photoURL }, { merge: true }); // Update photoURL
+         await setDoc(doc(db, "users", user.uid), { photoURL: user.photoURL }, { merge: true }); 
       } else {
-        // New user via Google
         userProfileData = {
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
           photoURL: user.photoURL,
-          role: null, // Role needs to be set post-registration
+          role: null, 
         };
         await setDoc(doc(db, "users", user.uid), userProfileData);
       }
       
-      toast({ title: "Signed in with Google", description: userDoc.exists() && userDoc.data()?.role ? "Welcome back!" : "Welcome! Please complete your profile if prompted." });
+      toast({ title: "Signed in with Google", description: userDoc.exists() && userDoc.data()?.role ? "Welcome back to Zutara!" : "Welcome to Zutara! Please complete your profile if prompted." });
 
       if (userProfileData.role === 'client') {
         router.push("/client/dashboard");
       } else if (userProfileData.role === 'freelancer') {
         router.push("/freelancer/dashboard");
       } else {
-        // If role is null (e.g., new Google user), redirect to home or a profile completion page.
-        // For now, let's redirect to home. The dashboard/profile page should handle prompting for role.
         router.push("/");
       }
 
@@ -145,7 +140,7 @@ export default function AceternitySignInForm() {
         Welcome Back to Zutara
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-        Sign in to access your account.
+        Sign in to access your Zutara account.
       </p>
 
       <form className="my-8" onSubmit={handleEmailSignIn}>
@@ -184,7 +179,7 @@ export default function AceternitySignInForm() {
           </button>
         </div>
         <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-300">
-          Don&apos;t have an account?{" "}
+          Don&apos;t have a Zutara account?{" "}
           <Link href="/signup" className="font-medium text-primary hover:underline">
             Sign up
           </Link>

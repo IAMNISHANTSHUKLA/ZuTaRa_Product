@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,10 +18,9 @@ import { Upload } from "lucide-react";
 
 const profileSchema = z.object({
   displayName: z.string().min(2, "Display name must be at least 2 characters."),
-  skills: z.string().optional(), // Comma-separated for simplicity
+  skills: z.string().optional(), 
   experience: z.string().optional(),
   portfolio: z.string().url("Must be a valid URL").optional().or(z.literal('')),
-  // photoURL: z.string().url("Must be a valid URL for photo").optional(), // For file upload, this needs different handling
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
@@ -29,7 +29,6 @@ export default function FreelancerProfilePage() {
   const { toast } = useToast();
   const { user, userProfile, updateUserProfile, fetchUserProfile, loading: authLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [photoFile, setPhotoFile] = useState<File | null>(null); // For file upload handling
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -50,7 +49,6 @@ export default function FreelancerProfilePage() {
         portfolio: userProfile.portfolio || "",
       });
     } else if (user && !authLoading) {
-      // If userProfile is not yet loaded but user exists, try fetching
       fetchUserProfile(user.uid);
     }
   }, [userProfile, form, user, authLoading, fetchUserProfile]);
@@ -58,7 +56,7 @@ export default function FreelancerProfilePage() {
 
   async function onSubmit(values: ProfileFormData) {
     if (!user) {
-      toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
+      toast({ title: "Error", description: "You must be logged in to update your Zutara profile.", variant: "destructive" });
       return;
     }
     setIsSubmitting(true);
@@ -70,54 +68,35 @@ export default function FreelancerProfilePage() {
       portfolio: values.portfolio,
     };
 
-    // Placeholder for photoURL update logic if implementing file uploads
-    // if (photoFile) { /* ... upload logic ...; profileDataToUpdate.photoURL = uploadedUrl; */ }
-
     try {
       await updateUserProfile(user.uid, profileDataToUpdate);
-      toast({ title: "Profile Updated", description: "Your profile has been successfully updated." });
+      toast({ title: "Zutara Profile Updated", description: "Your Zutara profile has been successfully updated." });
     } catch (error) {
-      console.error("Profile Update Error:", error);
-      toast({ title: "Error", description: "Failed to update profile.", variant: "destructive" });
+      console.error("Zutara Profile Update Error:", error);
+      toast({ title: "Error", description: "Failed to update Zutara profile.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  // const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     setPhotoFile(event.target.files[0]);
-  //     // Optionally display a preview
-  //   }
-  // };
 
   if (authLoading) {
-     return <div className="flex justify-center items-center h-screen"><p>Loading profile...</p></div>;
+     return <div className="flex justify-center items-center h-screen"><p>Loading Zutara profile...</p></div>;
   }
 
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Your Freelancer Profile</CardTitle>
-        <CardDescription>Keep your profile up-to-date to attract clients.</CardDescription>
+        <CardTitle className="text-2xl font-bold">Your Zutara Freelancer Profile</CardTitle>
+        <CardDescription>Keep your Zutara profile up-to-date to attract clients.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center space-y-4 mb-8">
           <Avatar className="w-24 h-24">
-            <AvatarImage src={userProfile?.photoURL || user?.photoURL || `https://placehold.co/96x96/77B5B0/FFFFFF?text=${userProfile?.displayName?.charAt(0) || user?.email?.charAt(0) || 'A'}`} />
-            <AvatarFallback>{userProfile?.displayName?.charAt(0) || user?.email?.charAt(0) || "A"}</AvatarFallback>
+            <AvatarImage src={userProfile?.photoURL || user?.photoURL || `https://placehold.co/96x96/77B5B0/FFFFFF?text=${userProfile?.displayName?.charAt(0) || user?.email?.charAt(0) || 'Z'}`} />
+            <AvatarFallback>{userProfile?.displayName?.charAt(0) || user?.email?.charAt(0) || "Z"}</AvatarFallback>
           </Avatar>
-          {/* 
-          <div className="relative">
-            <Button variant="outline" size="sm" asChild>
-              <label htmlFor="photoUpload" className="cursor-pointer">
-                <Upload className="mr-2 h-4 w-4" /> Change Photo
-              </label>
-            </Button>
-            <Input id="photoUpload" type="file" className="absolute opacity-0 w-0 h-0" onChange={handlePhotoChange} accept="image/*" />
-          </div>
-          {photoFile && <p className="text-sm text-muted-foreground">New: {photoFile.name}</p>}
-          */}
+          {/* File upload for photo is commented out, can be re-enabled later */}
         </div>
 
         <Form {...form}>
@@ -129,7 +108,7 @@ export default function FreelancerProfilePage() {
                 <FormItem>
                   <FormLabel>Display Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your Name or Company" {...field} />
+                    <Input placeholder="Your Name or Company on Zutara" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -178,9 +157,8 @@ export default function FreelancerProfilePage() {
                 </FormItem>
               )}
             />
-            {/* Add more fields like testimonials here if needed */}
             <Button type="submit" className="w-full" disabled={isSubmitting || authLoading}>
-              {isSubmitting ? "Saving..." : "Save Profile"}
+              {isSubmitting ? "Saving to Zutara..." : "Save Zutara Profile"}
             </Button>
           </form>
         </Form>

@@ -1,3 +1,4 @@
+
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,7 +16,7 @@ export default function AboutPage() {
           <CardContent className="space-y-6 text-lg text-foreground">
             <div className="flex justify-center mb-8">
               <Image 
-                src="https://placehold.co/800x400/2E7DAF/FFFFFF?text=Our+Mission" 
+                src="https://placehold.co/800x400/2E7DAF/FFFFFF?text=Our+Mission+at+Zutara" 
                 alt="Zutara Mission" 
                 width={800} 
                 height={400} 
@@ -38,14 +39,14 @@ export default function AboutPage() {
             <h2 className="text-2xl font-semibold text-accent pt-4">Our Vision</h2>
             <p>
               We envision a future where finding the right architectural talent or project is seamless,
-              transparent, and inspiring. By leveraging technology, including AI-powered matching, we aim
+              transparent, and inspiring. By leveraging technology, including AI-powered matching, Zutara aims
               to simplify the discovery process, enabling more meaningful and successful partnerships.
             </p>
             <h2 className="text-2xl font-semibold text-accent pt-4">Why Zutara?</h2>
             <ul className="list-disc list-inside space-y-2 pl-4">
-              <li><strong>Curated Network:</strong> Access a community of verified professionals and serious clients.</li>
+              <li><strong>Curated Network:</strong> Access a community of verified professionals and serious clients on Zutara.</li>
               <li><strong>Streamlined Process:</strong> Easy-to-use tools for job posting, profile creation, and communication.</li>
-              <li><strong>Career Growth:</strong> Opportunities for freelancers to find projects and students to secure internships.</li>
+              <li><strong>Career Growth:</strong> Opportunities for freelancers to find projects and students to secure internships through Zutara.</li>
               <li><strong>AI-Powered Insights:</strong> Intelligent matching to connect the right people for the right projects.</li>
             </ul>
             <p className="pt-4">

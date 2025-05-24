@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { generateJobPost } from "@/ai/flows/job-post-generator"; // AI feature
+import { generateJobPost } from "@/ai/flows/job-post-generator";
 import { useState } from "react";
 import { Wand2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,9 +18,9 @@ const jobPostSchema = z.object({
   projectDescription: z.string().min(10, { message: "Project description must be at least 10 characters." }).optional(),
   jobTitle: z.string().min(5, { message: "Job title must be at least 5 characters." }),
   jobDescription: z.string().min(20, { message: "Detailed description must be at least 20 characters." }),
-  requiredSkills: z.string().min(3, { message: "Please list at least one skill." }), // Comma-separated string for simplicity
+  requiredSkills: z.string().min(3, { message: "Please list at least one skill." }), 
   budget: z.string().min(1, { message: "Budget is required." }),
-  deadline: z.string().min(1, { message: "Deadline is required." }), // Could use a date picker
+  deadline: z.string().min(1, { message: "Deadline is required." }), 
 });
 
 type JobPostFormData = z.infer<typeof jobPostSchema>;
@@ -46,7 +47,7 @@ export default function PostJobPage() {
     if (!projectDesc || projectDesc.length < 10) {
       toast({
         title: "Error",
-        description: "Please provide a brief project description (min 10 characters) to generate a job post.",
+        description: "Please provide a brief project description (min 10 characters) to generate a job post for Zutara.",
         variant: "destructive",
       });
       return;
@@ -60,12 +61,12 @@ export default function PostJobPage() {
       form.setValue("requiredSkills", result.requiredSkills);
       form.setValue("budget", result.budget);
       form.setValue("deadline", result.deadline);
-      toast({ title: "Success", description: "Job post draft generated!" });
+      toast({ title: "Success", description: "Zutara job post draft generated!" });
     } catch (error) {
       console.error("AI Job Post Generation Error:", error);
       toast({
         title: "AI Generation Error",
-        description: "Could not generate job post. Please try again or fill manually.",
+        description: "Could not generate job post on Zutara. Please try again or fill manually.",
         variant: "destructive",
       });
     } finally {
@@ -75,26 +76,25 @@ export default function PostJobPage() {
 
   async function onSubmit(values: JobPostFormData) {
     setIsSubmitting(true);
-    // Here you would typically save the job post to your database (e.g., Firestore)
-    console.log("Job Post Submitted:", values);
+    console.log("Job Post Submitted to Zutara:", values);
     // Example: await addDoc(collection(db, "jobPosts"), { ...values, clientId: user.uid, createdAt: new Date() });
     
-    setTimeout(() => { // Simulate API call
+    setTimeout(() => { 
       toast({
-        title: "Job Posted!",
-        description: "Your job listing has been successfully created.",
+        title: "Job Posted on Zutara!",
+        description: "Your job listing has been successfully created on Zutara.",
       });
       form.reset();
       setIsSubmitting(false);
-      // router.push("/client/dashboard"); // Optional: Redirect after posting
+      // router.push("/client/dashboard"); 
     }, 1000);
   }
 
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Create a New Job Post</CardTitle>
-        <CardDescription>Fill in the details for your project to find the best talent.</CardDescription>
+        <CardTitle className="text-2xl font-bold">Create a New Job Post on Zutara</CardTitle>
+        <CardDescription>Fill in the details for your project to find the best talent on Zutara.</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -104,7 +104,7 @@ export default function PostJobPage() {
               name="projectDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Brief Project Description (for AI)</FormLabel>
+                  <FormLabel>Brief Project Description (for AI generation on Zutara)</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="e.g., Design a modern minimalist 3-bedroom house with a focus on sustainability."
@@ -114,7 +114,7 @@ export default function PostJobPage() {
                   <FormMessage />
                   <Button type="button" onClick={handleGenerateJobPost} disabled={isGenerating} className="mt-2">
                     <Wand2 className="mr-2 h-4 w-4" />
-                    {isGenerating ? "Generating..." : "Generate with AI"}
+                    {isGenerating ? "Generating on Zutara..." : "Generate with AI on Zutara"}
                   </Button>
                 </FormItem>
               )}
@@ -157,7 +157,7 @@ export default function PostJobPage() {
                 <FormItem>
                   <FormLabel>Required Skills</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., AutoCAD, Revit, 3D Modeling, Sustainable Design (comma-separated)" {...field} />
+                    <Input placeholder="e.g., AutoCAD, Revit, 3D Modeling (comma-separated)" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -192,7 +192,7 @@ export default function PostJobPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting || isGenerating}>
-              {isSubmitting ? "Submitting..." : "Post Job"}
+              {isSubmitting ? "Submitting to Zutara..." : "Post Job on Zutara"}
             </Button>
           </form>
         </Form>

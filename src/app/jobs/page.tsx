@@ -5,13 +5,10 @@ import React, { useState, useEffect } from 'react';
 import { Search, Filter, MapPin, Clock, DollarSign, Star, Bookmark, ChevronDown, Users, Calendar, TrendingUp, Home, Palette, Compass } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import type { Metadata } from 'next'; // Keep if you want to set metadata this way for client components, though usually done in page.tsx for server components
+import type { Metadata } from 'next'; 
 
-// While metadata is usually for Server Components, Next.js might allow it here.
-// If not, this can be removed or handled via `document.title` in useEffect.
-// For simplicity of this update, we'll keep it, assuming it's handled or ignored gracefully.
-// export const metadata: Metadata = {
-// title: 'Zutara',
+// export const metadata: Metadata = { // Metadata for client components is usually set via document.title in useEffect
+// title: 'Zutara - Job Listings',
 // description: 'Find your next architecture and design project on Zutara.',
 // };
 
@@ -20,11 +17,10 @@ const JobListingsPage = () => {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  // const [selectedBudget, setSelectedBudget] = useState('all'); // Keep commented if not used
-  // const [selectedDuration, setSelectedDuration] = useState('all'); // Keep commented if not used
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
+    document.title = 'Zutara - Job Listings'; // Set document title for client component
     const queryParam = searchParams.get('q');
     const categoryParam = searchParams.get('category');
     if (queryParam) {
@@ -35,22 +31,9 @@ const JobListingsPage = () => {
     }
   }, [searchParams]);
 
-  // const categories = [ // Keep commented if not directly used in a dynamic select
-  // 'All Categories',
-  // 'Residential Architecture',
-  // 'Commercial Architecture',
-  // 'Interior Design',
-  // 'Landscape Architecture',
-  // 'Urban Planning',
-  // 'Structural Engineering',
-  // '3D Visualization',
-  // 'CAD Drafting',
-  // 'Renovation Design'
-  // ];
-
   const jobs = [
     {
-      id: 1,
+      id: "1", // Ensure IDs are strings if job detail page expects string IDs
       title: 'Modern Residential Home Design',
       description: 'Seeking an experienced residential architect to design a contemporary 3,500 sq ft family home with sustainable features and open-concept living spaces.',
       client: 'GreenLiving Developers',
@@ -67,7 +50,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: 2,
+      id: "2",
       title: 'Luxury Hotel Interior Design',
       description: 'Looking for a creative interior designer to conceptualize and design interiors for a 120-room boutique hotel with spa and restaurant facilities.',
       client: 'Prestige Hospitality Group',
@@ -84,7 +67,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: 3,
+      id: "3",
       title: '3D Architectural Visualization & Renderings (Internship Opportunity)',
       description: 'Need high-quality photorealistic renderings for a mixed-use development project including exterior and interior visualizations. Great for interns.',
       client: 'Urban Development Co',
@@ -101,7 +84,7 @@ const JobListingsPage = () => {
       featured: false
     },
     {
-      id: 4,
+      id: "4",
       title: 'Corporate Office Space Planning',
       description: 'Design an efficient and modern workspace for 150 employees including open areas, private offices, meeting rooms, and collaborative spaces.',
       client: 'TechFlow Solutions',
@@ -118,7 +101,7 @@ const JobListingsPage = () => {
       featured: false
     },
     {
-      id: 5,
+      id: "5",
       title: 'Historic Building Renovation Design',
       description: 'Seeking an architect experienced in historic preservation to renovate a 1920s warehouse into modern loft apartments while maintaining historic character.',
       client: 'Heritage Properties LLC',
@@ -135,7 +118,7 @@ const JobListingsPage = () => {
       featured: true
     },
     {
-      id: 6,
+      id: "6",
       title: 'Landscape Design for Residential Community',
       description: 'Design sustainable landscaping and outdoor spaces for a 50-unit residential development including parks, walkways, and water features.',
       client: 'EcoVillage Developments',
@@ -159,46 +142,21 @@ const JobListingsPage = () => {
                          job.description.toLowerCase().includes(normalizedSearchQuery) ||
                          job.skills.some(skill => skill.toLowerCase().includes(normalizedSearchQuery));
     
-    const matchesCategory = selectedCategory === 'all' || job.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'all' || job.category === selectedCategory || selectedCategory.toLowerCase() === 'all specialties';
     
     return matchesSearch && matchesCategory;
   });
 
-  // Effect to set document title if metadata object isn't picked up
-  useEffect(() => {
-    document.title = 'Zutara - Job Listings';
-  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-gray-800">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-2">
-                <Compass className="w-8 h-8 text-blue-600" />
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Zutara</h1>
-              </Link>
-              <span className="text-gray-500 hidden md:inline">|</span>
-              <span className="text-gray-600 hidden md:inline">Architecture & Design Marketplace</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/client/post-job">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                  Post a Project
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-gray-800 pt-20"> {/* Added pt-20 for header offset */}
+      {/* Header is now part of the main layout, so removed from here */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-3">Find Your Next Design Project</h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">Connect with clients seeking exceptional architectural and design talent for residential, commercial, and specialized projects</p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-3">Find Your Next Design Project on Zutara</h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">Connect with clients seeking exceptional architectural and design talent for residential, commercial, and specialized projects.</p>
         </div>
 
         {/* Quick Stats */}
@@ -210,7 +168,7 @@ const JobListingsPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">2,847</p>
-                <p className="text-gray-600">Active Projects</p>
+                <p className="text-gray-600">Active Projects on Zutara</p>
               </div>
             </div>
           </div>
@@ -221,7 +179,7 @@ const JobListingsPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">1,293</p>
-                <p className="text-gray-600">Design Professionals</p>
+                <p className="text-gray-600">Design Professionals on Zutara</p>
               </div>
             </div>
           </div>
@@ -232,7 +190,7 @@ const JobListingsPage = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">4.8</p>
-                <p className="text-gray-600">Avg. Client Rating</p>
+                <p className="text-gray-600">Avg. Client Rating on Zutara</p>
               </div>
             </div>
           </div>
@@ -241,19 +199,17 @@ const JobListingsPage = () => {
         {/* Search and Filters */}
         <div className="bg-white rounded-xl shadow-sm border p-6 mb-8">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search Bar */}
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Search projects by type, location, or software..."
+                placeholder="Search projects by type, location, or software on Zutara..."
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
 
-            {/* Category Filter */}
             <div className="relative">
               <select
                 className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-48"
@@ -267,12 +223,10 @@ const JobListingsPage = () => {
                 <option value="Landscape Architecture">Landscape Architecture</option>
                 <option value="3D Visualization">3D Visualization</option>
                 <option value="Renovation Design">Renovation Design</option>
-                 {/* Add other categories from your list if needed */}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
             </div>
 
-            {/* Advanced Filters Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center space-x-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
@@ -282,7 +236,6 @@ const JobListingsPage = () => {
             </button>
           </div>
 
-          {/* Advanced Filters */}
           {showFilters && (
             <div className="mt-4 pt-4 border-t border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -330,10 +283,9 @@ const JobListingsPage = () => {
           )}
         </div>
 
-        {/* Stats Bar */}
         <div className="bg-white rounded-xl shadow-sm border p-4 mb-6">
           <div className="flex flex-wrap items-center justify-between text-sm text-gray-600">
-            <span className="font-medium">{filteredJobs.length} projects available</span>
+            <span className="font-medium">{filteredJobs.length} projects available on Zutara</span>
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-1">
                 <TrendingUp className="w-4 h-4" />
@@ -343,12 +295,10 @@ const JobListingsPage = () => {
           </div>
         </div>
 
-        {/* Job Listings */}
         <div className="space-y-6">
-          {filteredJobs.map((job) => (
+          {filteredJobs.length > 0 ? filteredJobs.map((job) => (
             <div key={job.id} className="bg-white rounded-xl shadow-sm border hover:shadow-lg transition-all duration-300">
               <div className="p-6">
-                {/* Job Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-3 flex-wrap">
@@ -369,20 +319,17 @@ const JobListingsPage = () => {
                         {job.projectType}
                       </span>
                     </div>
-                    <Link href={`/jobs/${job.id}`} legacyBehavior>
-                      <a className="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 cursor-pointer transition-colors block">
+                    <Link href={`/jobs/${job.id}`} className="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 cursor-pointer transition-colors block">
                         {job.title}
-                      </a>
                     </Link>
-                    <p className="text-gray-600 mb-4 leading-relaxed text-base">{job.description}</p>
+                    <p className="text-gray-600 mb-4 leading-relaxed text-base line-clamp-2">{job.description}</p>
                   </div>
                   <button aria-label="Bookmark job" className="ml-4 p-2 text-gray-400 hover:text-blue-600 transition-colors">
                     <Bookmark className="w-6 h-6" />
                   </button>
                 </div>
 
-                {/* Skills */}
-                <div className="mb-4">
+                <div className="mb-4 px-6">
                   <p className="text-sm font-medium text-gray-700 mb-2">Required Skills & Software:</p>
                   <div className="flex flex-wrap gap-2">
                     {job.skills.map((skill, index) => (
@@ -392,91 +339,51 @@ const JobListingsPage = () => {
                     ))}
                   </div>
                 </div>
-
-                {/* Job Details */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-sm text-gray-600 mb-6 bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center space-x-2">
-                    <DollarSign className="w-4 h-4 text-green-600 shrink-0" />
-                    <div>
-                      <p className="text-xs text-gray-500">Budget</p>
-                      <p className="font-semibold text-gray-900">{job.budget}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Clock className="w-4 h-4 text-blue-600 shrink-0" />
-                    <div>
-                      <p className="text-xs text-gray-500">Duration</p>
-                      <p className="font-semibold text-gray-900">{job.duration}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4 text-purple-600 shrink-0" />
-                    <div>
-                      <p className="text-xs text-gray-500">Location</p>
-                      <p className="font-semibold text-gray-900">{job.location}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Users className="w-4 h-4 text-orange-600 shrink-0" />
-                    <div>
-                      <p className="text-xs text-gray-500">Proposals</p>
-                      <p className="font-semibold text-gray-900">{job.proposals}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-teal-600 shrink-0" />
-                    <div>
-                      <p className="text-xs text-gray-500">Posted</p>
-                      <p className="font-semibold text-gray-900">{job.posted}</p>
-                    </div>
-                  </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-sm text-gray-600 mb-6 bg-gray-50 p-4 rounded-lg mx-6">
+                  <div className="flex items-center space-x-2"><DollarSign className="w-4 h-4 text-green-600 shrink-0" /><div><p className="text-xs text-gray-500">Budget</p><p className="font-semibold text-gray-900">{job.budget}</p></div></div>
+                  <div className="flex items-center space-x-2"><Clock className="w-4 h-4 text-blue-600 shrink-0" /><div><p className="text-xs text-gray-500">Duration</p><p className="font-semibold text-gray-900">{job.duration}</p></div></div>
+                  <div className="flex items-center space-x-2"><MapPin className="w-4 h-4 text-purple-600 shrink-0" /><div><p className="text-xs text-gray-500">Location</p><p className="font-semibold text-gray-900">{job.location}</p></div></div>
+                  <div className="flex items-center space-x-2"><Users className="w-4 h-4 text-orange-600 shrink-0" /><div><p className="text-xs text-gray-500">Proposals</p><p className="font-semibold text-gray-900">{job.proposals}</p></div></div>
+                  <div className="flex items-center space-x-2"><Calendar className="w-4 h-4 text-teal-600 shrink-0" /><div><p className="text-xs text-gray-500">Posted</p><p className="font-semibold text-gray-900">{job.posted}</p></div></div>
                 </div>
-
-                {/* Client Info & Actions */}
-                <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-gray-100 gap-4">
+                
+                <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-gray-100 px-6 pb-6 gap-4">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0">
                       {job.client.charAt(0)}
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">{job.client}</p>
-                      <div className="flex items-center space-x-1">
-                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                        <span className="text-sm font-medium text-gray-700">{job.clientRating}</span>
-                        <span className="text-xs text-gray-500">• Verified Client</span>
-                      </div>
+                      <div className="flex items-center space-x-1"><Star className="w-4 h-4 text-yellow-400 fill-yellow-400" /><span className="text-sm font-medium text-gray-700">{job.clientRating}</span><span className="text-xs text-gray-500">• Verified Client</span></div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3 w-full sm:w-auto">
-                    <Link href={`/jobs/${job.id}`} legacyBehavior>
-                        <a className="flex-1 sm:flex-none px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center">
-                           View Details
-                        </a>
-                    </Link>
-                    <button className="flex-1 sm:flex-none px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium shadow-sm">
-                      Submit Proposal
-                    </button>
+                      <Link href={`/jobs/${job.id}`} className="flex-1 sm:flex-none px-5 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center">
+                          View Details
+                      </Link>
+                      <Link href={`/jobs/${job.id}#apply`} className="flex-1 sm:flex-none px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-medium shadow-sm text-center">
+                        Submit Proposal
+                      </Link>
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className="text-center mt-8 py-10 bg-white rounded-xl shadow-sm border">
+                <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">No Projects Found on Zutara</h3>
+                <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
+            </div>
+          )}
         </div>
 
-        {/* Load More */}
-        {filteredJobs.length === 0 && jobs.length > 0 && ( // Condition to show Load More only if there are more jobs to load potentially
+        {filteredJobs.length > 0 && ( 
            <div className="text-center mt-8">
              <button className="px-8 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
                Load More Projects
              </button>
            </div>
-        )}
-         {filteredJobs.length === 0 && (
-            <div className="text-center mt-8 py-10 bg-white rounded-xl shadow-sm border">
-                <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-700 mb-2">No Projects Found</h3>
-                <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
-            </div>
         )}
       </div>
     </div>

@@ -15,8 +15,8 @@ import { auth, db } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 import type { UserProfile } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Label } from "@/components/ui/label"; // Will use the new Aceternity Label
-import { Input } from "@/components/ui/input"; // Will use the new Aceternity Input
+import { Label } from "@/components/ui/label"; 
+import { Input } from "@/components/ui/input"; 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { IconBrandGoogle } from "@tabler/icons-react";
 
@@ -72,7 +72,7 @@ function AceternitySignUpFormContent() {
   const handleEmailSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!role) {
-      toast({ title: "Error", description: "Please select a role.", variant: "destructive" });
+      toast({ title: "Error", description: "Please select a role for your Zutara account.", variant: "destructive" });
       return;
     }
     setLoading(true);
@@ -90,7 +90,7 @@ function AceternitySignUpFormContent() {
       };
       await setDoc(doc(db, "users", user.uid), userProfileData);
 
-      toast({ title: "Success", description: "Account created successfully! Please sign in." });
+      toast({ title: "Success", description: "Zutara account created successfully! Please sign in." });
       router.push("/signin");
     } catch (error: any) {
       console.error("Sign Up Error:", error);
@@ -99,7 +99,7 @@ function AceternitySignUpFormContent() {
       }
       toast({
         title: "Sign Up Error",
-        description: error.message || "Failed to create account.",
+        description: error.message || "Failed to create Zutara account.",
         variant: "destructive",
       });
     } finally {
@@ -118,27 +118,23 @@ function AceternitySignUpFormContent() {
       const userDoc = await getDoc(userDocRef);
 
       if (!userDoc.exists() || !userDoc.data()?.role) {
-        // New user or existing user without a role
         const userProfileData: Partial<UserProfile> = {
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
           photoURL: user.photoURL,
-          role: userDoc.exists() ? userDoc.data()?.role || null : null, // Preserve existing role if any, else null
+          role: userDoc.exists() ? userDoc.data()?.role || null : null, 
         };
         await setDoc(doc(db, "users", user.uid), userProfileData, { merge: true });
-        toast({ title: "Signed in with Google", description: "Welcome! Please complete your profile if needed." });
-         // Redirect to dashboard or a role selection page if role is null
+        toast({ title: "Signed in to Zutara with Google", description: "Welcome! Please complete your profile if needed." });
         if (!userProfileData.role) {
-            // Potentially redirect to a page to select role or rely on dashboard to prompt
             router.push(userProfileData.role === 'client' ? '/client/dashboard' : userProfileData.role === 'freelancer' ? '/freelancer/dashboard' : '/');
         } else {
             router.push(userProfileData.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard');
         }
 
       } else {
-         // Existing user with a role
-        toast({ title: "Signed in with Google", description: "Welcome back!" });
+        toast({ title: "Signed in to Zutara with Google", description: "Welcome back!" });
         const existingProfile = userDoc.data() as UserProfile;
         router.push(existingProfile.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard');
       }
@@ -146,7 +142,7 @@ function AceternitySignUpFormContent() {
       console.error("Google Sign In Error:", error);
       toast({
         title: "Google Sign In Error",
-        description: error.message || "Failed to sign in with Google.",
+        description: error.message || "Failed to sign in to Zutara with Google.",
         variant: "destructive",
       });
     } finally {
@@ -160,7 +156,7 @@ function AceternitySignUpFormContent() {
         Join Zutara
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-        Create your account to connect with architects and clients.
+        Create your Zutara account to connect with architects and clients.
       </p>
 
       <form className="my-8" onSubmit={handleEmailSignUp}>
@@ -190,7 +186,7 @@ function AceternitySignUpFormContent() {
                 onValueChange={(value: "client" | "freelancer") => setRole(value)}
             >
                 <SelectTrigger id="role" className="bg-gray-50 dark:bg-zinc-800 dark:text-white">
-                    <SelectValue placeholder="Select your role" />
+                    <SelectValue placeholder="Select your role on Zutara" />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="client">Client (Looking to hire)</SelectItem>
@@ -226,7 +222,7 @@ function AceternitySignUpFormContent() {
           </button>
         </div>
          <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-300">
-          Already have an account?{" "}
+          Already have a Zutara account?{" "}
           <Link href="/signin" className="font-medium text-primary hover:underline">
             Sign in
           </Link>

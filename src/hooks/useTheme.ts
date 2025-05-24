@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
@@ -9,7 +10,7 @@ export function useTheme(defaultTheme: Theme = 'light'): [Theme, () => void] {
     if (typeof window === 'undefined') {
       return defaultTheme;
     }
-    const storedTheme = localStorage.getItem('archconnect-theme') as Theme | null;
+    const storedTheme = localStorage.getItem('zutara-theme') as Theme | null; // Updated key
     return storedTheme || defaultTheme;
   });
 
@@ -17,7 +18,7 @@ export function useTheme(defaultTheme: Theme = 'light'): [Theme, () => void] {
     if (typeof window !== 'undefined') {
       document.documentElement.classList.remove('light', 'dark');
       document.documentElement.classList.add(theme);
-      localStorage.setItem('archconnect-theme', theme);
+      localStorage.setItem('zutara-theme', theme); // Updated key
     }
   }, [theme]);
 
