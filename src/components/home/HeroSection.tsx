@@ -1,18 +1,18 @@
 "use client";
 
 import Image from 'next/image';
-import { ScrollEffectSection } from '@/hooks/useScrollEffect';
 
 export default function HeroSection() {
   return (
-    <ScrollEffectSection 
-      bgImageUrl="https://placehold.co/1920x1080/F0F4F8/2E7DAF?text=Architectural+Background"
-      bgClassName="hero-bg-image"
-      className="min-h-screen"
-      contentClassName="flex-col"
-      data-ai-hint="architecture abstract"
+    <section 
+      className="min-h-screen template-section relative" // template-section handles flex centering
     >
-      {() => (
+      <div
+        className="template-bg hero-bg-image" // Classes from template.css
+        style={{ backgroundImage: `url(https://placehold.co/1920x1080/F0F4F8/2E7DAF?text=Architectural+Background)` }}
+        data-ai-hint="architecture abstract"
+      />
+      <div className="template-content flex-col"> {/* template-content and flex-col from template.css */}
         <div className="template-quotes-layout w-full">
           <div className="template-quote-block">
             <h4 className="text-lg font-semibold">Architectural Digest Tech</h4>
@@ -34,7 +34,7 @@ export default function HeroSection() {
             <p className="text-sm">"With ArchConnect, the future of creative collaboration is not just imagined — it's beautifully built."</p>
           </div>
         </div>
-      )}
-    </ScrollEffectSection>
+      </div>
+    </section>
   );
 }
