@@ -11,47 +11,66 @@ export default function AboutPage() {
       <main className="container mx-auto px-4 py-8 mt-20">
         <Card className="shadow-lg">
           <CardHeader className="text-center">
-            <CardTitle className="text-4xl font-bold text-primary">About Zutara</CardTitle>
+            <CardTitle className="text-4xl font-bold text-primary">About ZuTaRa</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 text-lg text-foreground">
             <div className="flex justify-center mb-8">
               <Image 
-                src="https://placehold.co/800x400/2E7DAF/FFFFFF?text=Our+Mission+at+Zutara" 
-                alt="Zutara Mission" 
+                src="https://placehold.co/800x400/2E7DAF/FFFFFF?text=About+ZuTaRa" 
+                alt="About ZuTaRa Platform" 
                 width={800} 
                 height={400} 
                 className="rounded-lg shadow-md"
-                data-ai-hint="team collaboration office" 
+                data-ai-hint="global team collaboration"
               />
             </div>
-            <p>
-              Welcome to Zutara, the premier platform dedicated to bridging the gap between
-              talented architects, visionary clients, and aspiring students in the architectural world.
-              Our mission is to foster a vibrant ecosystem where creativity thrives, collaborations flourish,
-              and careers are built.
+            <p className="text-center max-w-3xl mx-auto text-xl text-muted-foreground">
+              ZuTaRa represents the future of creative collaboration, breaking down geographical barriers to unite design professionals with clients who value exceptional work. Our platform is built specifically for designers and architects who understand that great projects know no boundaries.
             </p>
-            <p>
-              At Zutara, we believe in the power of connection. Whether you're a seasoned architectural firm
-              looking to showcase your portfolio, a client with a dream project waiting to be realized, or a
-              student eager to gain hands-on experience through internships, Zutara provides the tools
-              and community to make it happen.
-            </p>
-            <h2 className="text-2xl font-semibold text-accent pt-4">Our Vision</h2>
-            <p>
-              We envision a future where finding the right architectural talent or project is seamless,
-              transparent, and inspiring. By leveraging technology, including AI-powered matching, Zutara aims
-              to simplify the discovery process, enabling more meaningful and successful partnerships.
-            </p>
-            <h2 className="text-2xl font-semibold text-accent pt-4">Why Zutara?</h2>
-            <ul className="list-disc list-inside space-y-2 pl-4">
-              <li><strong>Curated Network:</strong> Access a community of verified professionals and serious clients on Zutara.</li>
-              <li><strong>Streamlined Process:</strong> Easy-to-use tools for job posting, profile creation, and communication.</li>
-              <li><strong>Career Growth:</strong> Opportunities for freelancers to find projects and students to secure internships through Zutara.</li>
-              <li><strong>AI-Powered Insights:</strong> Intelligent matching to connect the right people for the right projects.</li>
-            </ul>
-            <p className="pt-4">
-              Join Zutara today and be a part of revolutionizing how architectural projects come to life.
-            </p>
+            
+            <div className="grid md:grid-cols-2 gap-8 pt-8 items-center">
+                <div>
+                    <Image 
+                        src="https://placehold.co/600x400/77B5B0/FFFFFF?text=Our+Ecosystem" 
+                        alt="ZuTaRa Ecosystem" 
+                        width={600} 
+                        height={400} 
+                        className="rounded-lg shadow-md"
+                        data-ai-hint="diverse minds networking"
+                    />
+                </div>
+                <div>
+                    <h2 className="text-3xl font-semibold text-accent mb-4">Our Beliefs</h2>
+                    <p className="mb-4">
+                    We believe that creativity flourishes when diverse minds come together. ZuTaRa creates an ecosystem where innovative design solutions emerge from the intersection of global perspectives, cutting-edge technology, and meaningful professional relationships.
+                    </p>
+                </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8 pt-8 items-center">
+                 <div>
+                    <h2 className="text-3xl font-semibold text-accent mb-4">Our Mission</h2>
+                    <p className="mb-4">
+                    Our mission is simple: to democratize access to world-class design and architectural talent while empowering creative professionals to reach their full potential in the global marketplace.
+                    </p>
+                 </div>
+                 <div>
+                    <Image 
+                        src="https://placehold.co/600x400/A0A0A0/FFFFFF?text=Global+Marketplace" 
+                        alt="ZuTaRa Global Marketplace" 
+                        width={600} 
+                        height={400} 
+                        className="rounded-lg shadow-md"
+                        data-ai-hint="world map connections"
+                    />
+                </div>
+            </div>
+
+            <div className="text-center pt-10">
+                <p className="text-2xl font-semibold text-primary">
+                    Join ZuTaRa - Where Global Creativity Meets Unlimited Opportunity.
+                </p>
+            </div>
           </CardContent>
         </Card>
       </main>

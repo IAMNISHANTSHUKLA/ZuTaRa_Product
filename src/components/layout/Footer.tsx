@@ -5,55 +5,46 @@ import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 const footerColumns = [
   {
-    title: "Categories",
+    title: "Specializations",
     links: [
-        { text: "Graphics & Design", href: "/jobs?category=Graphics+%26+Design" },
-        { text: "Digital Marketing", href: "/jobs?category=Digital+Marketing" },
-        { text: "Writing & Translation", href: "/jobs?category=Writing+%26+Translation" },
-        { text: "Video & Animation", href: "/jobs?category=Video+%26+Animation" },
-        { text: "Music & Audio", href: "/jobs?category=Music+%26+Audio" },
-        { text: "Programming & Tech", href: "/jobs?category=Programming+%26+Tech" },
-        { text: "AI Services", href: "/jobs?category=AI+Services" },
-        { text: "Architecture & Interior Design", href: "/jobs?category=Architecture+%26+Interior+Design" },
-        { text: "Consulting", href: "/jobs?category=Consulting" }
+        { text: "Residential Architecture", href: "/jobs?category=Residential+Architecture" },
+        { text: "Commercial Architecture", href: "/jobs?category=Commercial+Architecture" },
+        { text: "Interior Design", href: "/jobs?category=Interior+Design" },
+        { text: "Landscape Architecture", href: "/jobs?category=Landscape+Architecture" },
+        { text: "Urban Planning", href: "/jobs?category=Urban+Planning" },
+        { text: "Graphic Design", href: "/jobs?category=Graphic+Design" },
+        { text: "UX/UI Design", href: "/jobs?category=UX%2FUI+Design" },
+        { text: "3D Visualization", href: "/jobs?category=3D+Visualization" },
     ]
   },
   {
-    title: "For Freelancers",
+    title: "For Creatives",
     links: [
-        { text: "Become a Freelancer", href: "/signup?role=freelancer" },
-        { text: "Zutara Community Hub", href: "#" },
-        { text: "Forum", href: "#" },
-        { text: "Events", href: "#" }
+        { text: "Create Your Profile", href: "/signup?role=freelancer" },
+        { text: "Find Projects", href: "/jobs" },
+        { text: "How ZuTaRa Works", href: "/about#getting-started" }, // Anchor link if section exists
+        { text: "Community Hub", href: "#" }, // Placeholder
     ]
   },
   {
     title: "For Clients",
     links: [
-        { text: "Post a Job on Zutara", href: "/client/post-job" },
-        { text: "Browse Freelancers", href: "/jobs" }, // General jobs page can serve as browse
-        { text: "How to Hire on Zutara", href: "#" },
-        { text: "Zutara Go", href: "#" }
+        { text: "Post a Project", href: "/client/post-job" },
+        { text: "Hire Talent", href: "/jobs" }, 
+        { text: "How to Hire", href: "/about#getting-started" }, // Anchor link if section exists
+        { text: "Browse Portfolios", href: "/projects" }
     ]
   },
-  {
-    title: "For Students",
+   {
+    title: "ZuTaRa",
     links: [
-        { text: "Find Internships on Zutara", href: "/jobs?q=internship" },
-        { text: "Portfolio Building Tips", href: "#" },
-        { text: "Mentorship Programs", href: "#" },
-        { text: "Student Competitions", href: "#" }
-    ]
-  },
-  {
-    title: "Company",
-    links: [
-        { text: "About Zutara", href: "/about" },
-        { text: "Help & Support", href: "#" },
-        { text: "Careers at Zutara", href: "#" },
-        { text: "Terms of Service", href: "#" },
-        { text: "Privacy Policy", href: "#" },
-        { text: "Press & News", href: "#" }
+        { text: "About Us", href: "/about" },
+        { text: "Success Stories", href: "/#success-stories" }, // Anchor link if section exists on home
+        { text: "Pricing & Plans", href: "/#pricing-plans" }, // Anchor link if section exists on home
+        { text: "Security & Trust", href: "/#security-trust" }, // Anchor link if section exists on home
+        { text: "Help & Support", href: "#" }, // Placeholder
+        { text: "Terms of Service", href: "#" }, // Placeholder
+        { text: "Privacy Policy", href: "#" }, // Placeholder
     ]
   }
 ];
@@ -62,14 +53,14 @@ export default function Footer() {
   return (
     <footer className="template-content4 footer-container pt-16 pb-8">
       <div className="template-footer-section">
-        <div className="template-footer-columns">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {footerColumns.map((column) => (
             <div key={column.title} className="template-footer-column mb-8 md:mb-0">
-              <h4 className="text-lg font-semibold mb-4">{column.title}</h4>
+              <h4 className="text-lg font-semibold mb-4 text-primary">{column.title}</h4>
               <ul className="space-y-2">
                 {column.links.map((link) => (
                   <li key={link.text}>
-                    <Link href={link.href} className="hover:text-primary transition-colors">
+                    <Link href={link.href} className="hover:text-primary transition-colors text-muted-foreground hover:text-foreground">
                       {link.text}
                     </Link>
                   </li>
@@ -82,7 +73,7 @@ export default function Footer() {
         <div className="template-footer-bottom flex flex-col md:flex-row justify-between items-center">
           <div className="template-footer-logo mb-6 md:mb-0">
             <Link href="/">
-              <Image src="https://placehold.co/180x60/2E7DAF/white?text=Zutara" alt="Zutara Logo" width={150} height={40} data-ai-hint="logo building" />
+              <Image src="https://placehold.co/180x60/2E7DAF/white?text=ZuTaRa" alt="ZuTaRa Logo" width={150} height={40} data-ai-hint="logo building" />
             </Link>
           </div>
           <div className="template-footer-socials flex space-x-4">
@@ -93,7 +84,7 @@ export default function Footer() {
           </div>
         </div>
         <p className="text-center text-muted-foreground text-sm mt-8">
-          © {new Date().getFullYear()} Zutara. All rights reserved.
+          © {new Date().getFullYear()} ZuTaRa. All rights reserved. Where Global Creativity Meets Unlimited Opportunity.
         </p>
       </div>
     </footer>

@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Zutara - Architectural Freelancing Platform',
-  description: 'Connecting architects, clients, and students for creative collaboration. Welcome to Zutara!',
+  title: 'ZuTaRa - Global Design & Architecture Freelancing Platform',
+  description: 'ZuTaRa connects talented designers and architects with exciting projects worldwide. Showcase expertise, collaborate globally, build your international career.',
 };
 
 export default function RootLayout({
