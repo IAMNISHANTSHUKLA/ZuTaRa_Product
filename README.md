@@ -9,3 +9,4 @@ To get started, take a look at src/app/page.tsx.
 # ZuTaRa_Product
 
 ZuTaRa is an innovative platform designed to connect architects, clients, and students in the architectural and design space. It facilitates project discovery, talent acquisition, and internship opportunities, fostering a vibrant community for creative collaboration and professional growth on a global scale.
+# ZuTaRa_Product
