@@ -66,9 +66,13 @@ export default function AceternitySignInForm() {
           } else if (userProfile.role === 'freelancer') {
             router.push("/freelancer/dashboard");
           } else {
+            // If role is not set, redirect to home, user might need to complete profile
+            toast({ title: "Profile Incomplete", description: "Please complete your profile information."});
             router.push("/"); 
           }
         } else {
+          // Should ideally not happen if user signed up correctly, but as a fallback
+           toast({ title: "Profile Not Found", description: "Please complete your profile information."});
           router.push("/"); 
         }
       } else {
@@ -76,9 +80,15 @@ export default function AceternitySignInForm() {
       }
     } catch (error: any) {
       console.error("Sign In Error:", error);
+      let description = "Failed to sign in. Please try again.";
+      if (error.code === "auth/invalid-credential" || error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+        description = "Invalid email or password. Please check your credentials and try again.";
+      } else if (error.code === "auth/invalid-email") {
+        description = "The email address is not valid. Please enter a valid email.";
+      }
       toast({
         title: "Sign In Error",
-        description: error.message || "Failed to sign in.",
+        description: description,
         variant: "destructive",
       });
     } finally {
@@ -99,9 +109,12 @@ export default function AceternitySignInForm() {
 
       if (userDoc.exists()) {
         userProfileData = userDoc.data() as UserProfile;
-        if (userProfileData.role === undefined) userProfileData.role = null;
-         await setDoc(doc(db, "users", user.uid), { photoURL: user.photoURL }, { merge: true }); 
+        // Ensure role is explicitly null if undefined from Firestore
+        if (userProfileData.role === undefined) userProfileData.role = null; 
+        // Merge photoURL in case it changed
+        await setDoc(doc(db, "users", user.uid), { photoURL: user.photoURL }, { merge: true }); 
       } else {
+        // New user via Google, role will be null initially
         userProfileData = {
           uid: user.uid,
           email: user.email,
@@ -112,13 +125,15 @@ export default function AceternitySignInForm() {
         await setDoc(doc(db, "users", user.uid), userProfileData);
       }
       
-      toast({ title: "Signed in with Google", description: userDoc.exists() && userDoc.data()?.role ? "Welcome back to Zutara!" : "Welcome to Zutara! Please complete your profile if prompted." });
+      toast({ title: "Signed in with Google", description: userProfileData.role ? "Welcome back to Zutara!" : "Welcome to Zutara! Please select your role or complete your profile." });
 
       if (userProfileData.role === 'client') {
         router.push("/client/dashboard");
       } else if (userProfileData.role === 'freelancer') {
         router.push("/freelancer/dashboard");
       } else {
+        // If role is null (e.g., new Google Sign-In user), redirect to home or a profile completion page.
+        // For now, redirecting to home. You might want a dedicated page for role selection.
         router.push("/");
       }
 
