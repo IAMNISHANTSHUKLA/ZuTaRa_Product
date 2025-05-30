@@ -1,24 +1,144 @@
 
-"use client";
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Search, Filter, MapPin, Clock, DollarSign, Star, Bookmark, ChevronDown, Users, Calendar, TrendingUp, Home, Palette, Compass, Briefcase, Award, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Added Card imports
-import { Button } from '@/components/ui/button'; // Added Button import
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import type { Metadata } from 'next';
+
+// Metadata should be defined at the top level of the page component
+export const metadata: Metadata = {
+  title: 'Zutara - Job Listings',
+  description: 'Find architecture and design jobs on Zutara.',
+};
+
+const jobsData = [
+  {
+    id: "1",
+    title: 'Modern Residential Home Design',
+    description: 'Seeking an experienced residential architect to design a contemporary 3,500 sq ft family home with sustainable features and open-concept living spaces.',
+    client: 'GreenLiving Developers',
+    clientRating: 4.9,
+    budget: '$8,000 - $15,000',
+    duration: '3-4 months',
+    category: 'Residential Architecture',
+    skills: ['AutoCAD', 'Revit', 'SketchUp', 'Sustainable Design', 'Building Codes'],
+    posted: '2 hours ago',
+    proposals: 7,
+    location: 'Austin, TX',
+    projectType: 'New Construction',
+    urgent: false,
+    featured: true
+  },
+  {
+    id: "2",
+    title: 'Luxury Hotel Interior Design',
+    description: 'Looking for a creative interior designer to conceptualize and design interiors for a 120-room boutique hotel with spa and restaurant facilities.',
+    client: 'Prestige Hospitality Group',
+    clientRating: 4.8,
+    budget: '$25,000 - $40,000',
+    duration: '4-6 months',
+    category: 'Interior Design',
+    skills: ['3ds Max', 'V-Ray', 'Adobe Creative Suite', 'FF&E Specification', 'Hospitality Design'],
+    posted: '4 hours ago',
+    proposals: 12,
+    location: 'Miami, FL',
+    projectType: 'Commercial Interior',
+    urgent: true,
+    featured: true
+  },
+  {
+    id: "3",
+    title: '3D Architectural Visualization & Renderings (Internship Opportunity)',
+    description: 'Need high-quality photorealistic renderings for a mixed-use development project including exterior and interior visualizations. Great for interns.',
+    client: 'Urban Development Co',
+    clientRating: 4.7,
+    budget: '$3,500 - $6,000',
+    duration: '4-6 weeks',
+    category: '3D Visualization',
+    skills: ['3ds Max', 'V-Ray', 'Corona Renderer', 'Photoshop', 'Architectural Visualization', 'Internship'],
+    posted: '1 day ago',
+    proposals: 18,
+    location: 'Remote',
+    projectType: 'Visualization',
+    urgent: false,
+    featured: false
+  },
+  {
+    id: "4",
+    title: 'Corporate Office Space Planning',
+    description: 'Design an efficient and modern workspace for 150 employees including open areas, private offices, meeting rooms, and collaborative spaces.',
+    client: 'TechFlow Solutions',
+    clientRating: 4.6,
+    budget: '$12,000 - $18,000',
+    duration: '2-3 months',
+    category: 'Commercial Architecture',
+    skills: ['Space Planning', 'Revit', 'AutoCAD', 'LEED Certification', 'Workplace Design'],
+    posted: '2 days ago',
+    proposals: 9,
+    location: 'Seattle, WA',
+    projectType: 'Office Design',
+    urgent: false,
+    featured: false
+  },
+  {
+    id: "5",
+    title: 'Historic Building Renovation Design',
+    description: 'Seeking an architect experienced in historic preservation to renovate a 1920s warehouse into modern loft apartments while maintaining historic character.',
+    client: 'Heritage Properties LLC',
+    clientRating: 4.9,
+    budget: '$15,000 - $25,000',
+    duration: '5-7 months',
+    category: 'Renovation Design',
+    skills: ['Historic Preservation', 'Building Codes', 'Structural Analysis', 'Revit', 'Zoning Compliance'],
+    posted: '3 days ago',
+    proposals: 5,
+    location: 'Boston, MA',
+    projectType: 'Historic Renovation',
+    urgent: false,
+    featured: true
+  },
+  {
+    id: "6",
+    title: 'Landscape Design for Residential Community',
+    description: 'Design sustainable landscaping and outdoor spaces for a 50-unit residential development including parks, walkways, and water features.',
+    client: 'EcoVillage Developments',
+    clientRating: 4.8,
+    budget: '$6,000 - $10,000',
+    duration: '6-8 weeks',
+    category: 'Landscape Architecture',
+    skills: ['Landscape Design', 'AutoCAD', 'SketchUp', 'Plant Selection', 'Sustainability'],
+    posted: '5 days ago',
+    proposals: 11,
+    location: 'Portland, OR',
+    projectType: 'Landscape Design',
+    urgent: false,
+    featured: false
+  }
+];
+
+const specializations = {
+  Architecture: ["Residential Design", "Commercial Architecture", "Urban Planning", "Sustainable Design", "Interior Architecture", "Landscape Architecture", "Historic Preservation", "Industrial Design"],
+  Design: ["Graphic Design", "UX/UI Design", "Product Design", "Brand Identity", "Print Design", "Digital Media", "Packaging Design", "Environmental Design"]
+};
+
+const projectCategories = {
+  Residential: ["Custom Home Design", "Renovations & Additions", "Interior Design", "Landscape Design", "Space Planning"],
+  Commercial: ["Office Design", "Retail Spaces", "Hospitality Design", "Mixed-Use Developments", "Corporate Branding"],
+  Digital: ["Website Design", "Mobile App Interfaces", "Digital Marketing Materials", "E-commerce Platforms", "Brand Development"]
+};
 
 
-const JobListingsPage = () => {
-  const searchParamsHook = useSearchParams(); // Renamed to avoid conflict
+function JobListingsPageContent() {
+  "use client"; // This component uses client hooks
+
+  const searchParamsHook = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  // const [selectedBudget, setSelectedBudget] = useState('all'); // Not used in provided filtering
-  // const [selectedDuration, setSelectedDuration] = useState('all'); // Not used
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
-    document.title = 'Zutara - Job Listings';
     const queryParam = searchParamsHook.get('q');
     const categoryParam = searchParamsHook.get('category');
     if (queryParam) {
@@ -29,136 +149,19 @@ const JobListingsPage = () => {
     }
   }, [searchParamsHook]);
 
-  const jobs = [
-    {
-      id: "1", 
-      title: 'Modern Residential Home Design',
-      description: 'Seeking an experienced residential architect to design a contemporary 3,500 sq ft family home with sustainable features and open-concept living spaces.',
-      client: 'GreenLiving Developers',
-      clientRating: 4.9,
-      budget: '$8,000 - $15,000',
-      duration: '3-4 months',
-      category: 'Residential Architecture',
-      skills: ['AutoCAD', 'Revit', 'SketchUp', 'Sustainable Design', 'Building Codes'],
-      posted: '2 hours ago',
-      proposals: 7,
-      location: 'Austin, TX',
-      projectType: 'New Construction',
-      urgent: false,
-      featured: true
-    },
-    {
-      id: "2",
-      title: 'Luxury Hotel Interior Design',
-      description: 'Looking for a creative interior designer to conceptualize and design interiors for a 120-room boutique hotel with spa and restaurant facilities.',
-      client: 'Prestige Hospitality Group',
-      clientRating: 4.8,
-      budget: '$25,000 - $40,000',
-      duration: '4-6 months',
-      category: 'Interior Design',
-      skills: ['3ds Max', 'V-Ray', 'Adobe Creative Suite', 'FF&E Specification', 'Hospitality Design'],
-      posted: '4 hours ago',
-      proposals: 12,
-      location: 'Miami, FL',
-      projectType: 'Commercial Interior',
-      urgent: true,
-      featured: true
-    },
-    {
-      id: "3",
-      title: '3D Architectural Visualization & Renderings (Internship Opportunity)',
-      description: 'Need high-quality photorealistic renderings for a mixed-use development project including exterior and interior visualizations. Great for interns.',
-      client: 'Urban Development Co',
-      clientRating: 4.7,
-      budget: '$3,500 - $6,000',
-      duration: '4-6 weeks',
-      category: '3D Visualization',
-      skills: ['3ds Max', 'V-Ray', 'Corona Renderer', 'Photoshop', 'Architectural Visualization', 'Internship'],
-      posted: '1 day ago',
-      proposals: 18,
-      location: 'Remote',
-      projectType: 'Visualization',
-      urgent: false,
-      featured: false
-    },
-    {
-      id: "4",
-      title: 'Corporate Office Space Planning',
-      description: 'Design an efficient and modern workspace for 150 employees including open areas, private offices, meeting rooms, and collaborative spaces.',
-      client: 'TechFlow Solutions',
-      clientRating: 4.6,
-      budget: '$12,000 - $18,000',
-      duration: '2-3 months',
-      category: 'Commercial Architecture',
-      skills: ['Space Planning', 'Revit', 'AutoCAD', 'LEED Certification', 'Workplace Design'],
-      posted: '2 days ago',
-      proposals: 9,
-      location: 'Seattle, WA',
-      projectType: 'Office Design',
-      urgent: false,
-      featured: false
-    },
-    {
-      id: "5",
-      title: 'Historic Building Renovation Design',
-      description: 'Seeking an architect experienced in historic preservation to renovate a 1920s warehouse into modern loft apartments while maintaining historic character.',
-      client: 'Heritage Properties LLC',
-      clientRating: 4.9,
-      budget: '$15,000 - $25,000',
-      duration: '5-7 months',
-      category: 'Renovation Design',
-      skills: ['Historic Preservation', 'Building Codes', 'Structural Analysis', 'Revit', 'Zoning Compliance'],
-      posted: '3 days ago',
-      proposals: 5,
-      location: 'Boston, MA',
-      projectType: 'Historic Renovation',
-      urgent: false,
-      featured: true
-    },
-    {
-      id: "6",
-      title: 'Landscape Design for Residential Community',
-      description: 'Design sustainable landscaping and outdoor spaces for a 50-unit residential development including parks, walkways, and water features.',
-      client: 'EcoVillage Developments',
-      clientRating: 4.8,
-      budget: '$6,000 - $10,000',
-      duration: '6-8 weeks',
-      category: 'Landscape Architecture',
-      skills: ['Landscape Design', 'AutoCAD', 'SketchUp', 'Plant Selection', 'Sustainability'],
-      posted: '5 days ago',
-      proposals: 11,
-      location: 'Portland, OR',
-      projectType: 'Landscape Design',
-      urgent: false,
-      featured: false
-    }
-  ];
-
-  const filteredJobs = jobs.filter(job => {
+  const filteredJobs = jobsData.filter(job => {
     const normalizedSearchQuery = searchQuery.toLowerCase();
     const matchesSearch = job.title.toLowerCase().includes(normalizedSearchQuery) ||
                          job.description.toLowerCase().includes(normalizedSearchQuery) ||
                          job.skills.some(skill => skill.toLowerCase().includes(normalizedSearchQuery));
     
-    const matchesCategory = selectedCategory === 'all' || job.category === selectedCategory || selectedCategory.toLowerCase() === 'all specialties'; // Adjusted for "All Specialties" from select
+    const matchesCategory = selectedCategory === 'all' || job.category === selectedCategory || selectedCategory.toLowerCase() === 'all specialties';
     
     return matchesSearch && matchesCategory;
   });
-  
-  const specializations = {
-    Architecture: ["Residential Design", "Commercial Architecture", "Urban Planning", "Sustainable Design", "Interior Architecture", "Landscape Architecture", "Historic Preservation", "Industrial Design"],
-    Design: ["Graphic Design", "UX/UI Design", "Product Design", "Brand Identity", "Print Design", "Digital Media", "Packaging Design", "Environmental Design"]
-  };
-
-  const projectCategories = {
-    Residential: ["Custom Home Design", "Renovations & Additions", "Interior Design", "Landscape Design", "Space Planning"],
-    Commercial: ["Office Design", "Retail Spaces", "Hospitality Design", "Mixed-Use Developments", "Corporate Branding"],
-    Digital: ["Website Design", "Mobile App Interfaces", "Digital Marketing Materials", "E-commerce Platforms", "Brand Development"]
-  };
-
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/50 pt-20 text-foreground"> {/* Added pt-20 for header offset */}
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/50 pt-20 text-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold text-primary mb-3">Find Your Next Design Project on Zutara</h2>
@@ -442,6 +445,14 @@ const JobListingsPage = () => {
       </div>
     </div>
   );
-};
+}
 
-export default JobListingsPage;
+export default function JobListingsPage() { // This is the top-level page component
+  return (
+    <Suspense fallback={<div className="flex justify-center items-center h-screen"><p>Loading Zutara job listings...</p></div>}>
+      <JobListingsPageContent />
+    </Suspense>
+  );
+}
+
+    
