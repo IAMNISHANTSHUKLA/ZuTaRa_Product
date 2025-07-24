@@ -1,0 +1,35 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users Collection
+    match /users/{userId} {
+      // Any authenticated user can create their own user profile document.
+      allow create: if request.auth != null && request.auth.uid == userId;
+      // Only the authenticated user can read or write to their own document.
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Job Postings Collection
+    match /jobPosts/{jobId} {
+      // Anyone can read job postings.
+      allow read: if true;
+      // Only authenticated users who are clients can create job postings.
+      // Assumes a 'role' field exists in the user's custom claims or profile.
+      allow create: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'client';
+      // The user who created the job can update or delete it.
+      allow update, delete: if request.auth != null && resource.data.clientId == request.auth.uid;
+    }
+
+    // Freelancer Portfolios
+    // This assumes portfolio items are stored in a subcollection under the user.
+    match /users/{userId}/portfolio/{projectId} {
+        // Anyone can view a user's portfolio.
+        allow read: if true;
+        // Only the authenticated user can manage their own portfolio projects.
+        allow create, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
