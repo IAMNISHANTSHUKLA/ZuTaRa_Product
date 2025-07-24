@@ -160,9 +160,14 @@ export default function Header() {
                 Dashboard
               </DropdownMenuItem>
               {userProfile?.role === 'freelancer' && (
-                <DropdownMenuItem onClick={() => router.push('/freelancer/profile')}>
-                  Profile
-                </DropdownMenuItem>
+                <>
+                  <DropdownMenuItem onClick={() => router.push('/freelancer/profile')}>
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push('/freelancer/portfolio')}>
+                    My Portfolio
+                  </DropdownMenuItem>
+                </>
               )}
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout}>
