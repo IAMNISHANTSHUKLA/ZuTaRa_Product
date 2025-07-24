@@ -23,7 +23,7 @@ const footerColumns = [
         { text: "Create Your Profile", href: "/signup?role=freelancer" },
         { text: "Find Projects", href: "/jobs" },
         { text: "How ZuTaRa Works", href: "/#getting-started" },
-        { text: "Community Hub", href: "#" }, // Placeholder
+        { text: "Community Hub", href: "/community" },
     ]
   },
   {
@@ -42,9 +42,9 @@ const footerColumns = [
         { text: "Success Stories", href: "/#success-stories" }, 
         { text: "Pricing & Plans", href: "/#pricing-plans" }, 
         { text: "Security & Trust", href: "/#security-trust" },
-        { text: "Help & Support", href: "#" }, // Placeholder
-        { text: "Terms of Service", href: "#" }, // Placeholder
-        { text: "Privacy Policy", href: "#" }, // Placeholder
+        { text: "Help & Support", href: "/support" },
+        { text: "Terms of Service", href: "/terms" },
+        { text: "Privacy Policy", href: "/privacy" },
     ]
   }
 ];
