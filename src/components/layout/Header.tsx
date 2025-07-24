@@ -89,11 +89,12 @@ export default function Header() {
       <div className="template-logo-container">
         <Link href="/" className="template-logo">
           <Image 
-            src="https://placehold.co/130x30/333333/FFFFFF?text=Zutara&font=arial" 
+            src="https://storage.googleapis.com/project-spark-312117-web-assets/v1/projects/studio-default-project/uploads/d3d8e577-4b8f-43b2-9a84-0a377fc32d80.png" 
             alt="Zutara Logo" 
-            width={130} 
-            height={30} 
-            data-ai-hint="Zutara brand name" 
+            width={140} 
+            height={40} 
+            data-ai-hint="logo" 
+            className="object-contain"
           />
         </Link>
         <ThemeToggle />

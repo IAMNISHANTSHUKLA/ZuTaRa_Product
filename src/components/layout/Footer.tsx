@@ -73,7 +73,7 @@ export default function Footer() {
         <div className="template-footer-bottom flex flex-col md:flex-row justify-between items-center">
           <div className="template-footer-logo mb-6 md:mb-0">
             <Link href="/">
-              <Image src="https://placehold.co/180x60/2E7DAF/white?text=ZuTaRa" alt="ZuTaRa Logo" width={150} height={40} data-ai-hint="logo building" />
+              <Image src="https://storage.googleapis.com/project-spark-312117-web-assets/v1/projects/studio-default-project/uploads/d3d8e577-4b8f-43b2-9a84-0a377fc32d80.png" alt="Zutara Logo" width={150} height={50} data-ai-hint="logo" className="object-contain"/>
             </Link>
           </div>
           <div className="template-footer-socials flex space-x-4">
