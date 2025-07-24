@@ -22,7 +22,7 @@ const footerColumns = [
     links: [
         { text: "Create Your Profile", href: "/signup?role=freelancer" },
         { text: "Find Projects", href: "/jobs" },
-        { text: "How ZuTaRa Works", href: "/about#getting-started" }, // Anchor link if section exists
+        { text: "How ZuTaRa Works", href: "/#getting-started" },
         { text: "Community Hub", href: "#" }, // Placeholder
     ]
   },
@@ -31,7 +31,7 @@ const footerColumns = [
     links: [
         { text: "Post a Project", href: "/client/post-job" },
         { text: "Hire Talent", href: "/jobs" }, 
-        { text: "How to Hire", href: "/about#getting-started" }, // Anchor link if section exists
+        { text: "How to Hire", href: "/#getting-started" },
         { text: "Browse Portfolios", href: "/projects" }
     ]
   },
@@ -39,9 +39,9 @@ const footerColumns = [
     title: "ZuTaRa",
     links: [
         { text: "About Us", href: "/about" },
-        { text: "Success Stories", href: "/#success-stories" }, // Anchor link if section exists on home
-        { text: "Pricing & Plans", href: "/#pricing-plans" }, // Anchor link if section exists on home
-        { text: "Security & Trust", href: "/#security-trust" }, // Anchor link if section exists on home
+        { text: "Success Stories", href: "/#success-stories" }, 
+        { text: "Pricing & Plans", href: "/#pricing-plans" }, 
+        { text: "Security & Trust", href: "/#security-trust" },
         { text: "Help & Support", href: "#" }, // Placeholder
         { text: "Terms of Service", href: "#" }, // Placeholder
         { text: "Privacy Policy", href: "#" }, // Placeholder
